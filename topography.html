@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Emotional Topography · Other Bodies</title>
+<meta name="description" content="A landscape for each of the 52 feelings in the Other Bodies deck." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+<style>
+  :root{--paper:#ffffff;--ink:#5d5a5b;--ink-strong:#454344;--stone:#a29f9f;
+    --hair:#e6e4e2;--hair-soft:#efedeb;--panel:#faf9f8;--maxw:1080px;--ease:cubic-bezier(.22,.61,.36,1);}
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{font-family:"Asap",system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);
+    background:var(--paper);-webkit-font-smoothing:antialiased;line-height:1.6;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+  a{color:inherit;}
+
+  .topbar{display:flex;align-items:baseline;justify-content:space-between;gap:16px 28px;flex-wrap:wrap;
+    padding:26px 0 18px;border-bottom:1px solid var(--hair);}
+  .mark{font-weight:600;font-size:15px;letter-spacing:.02em;color:var(--ink-strong);text-decoration:none;}
+  .navlinks{display:flex;flex-wrap:wrap;gap:20px;}
+  .navlinks a{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--stone);
+    font-weight:600;text-decoration:none;transition:color .2s var(--ease);}
+  .navlinks a:hover{color:var(--ink);}
+  .navlinks a[aria-current="page"]{color:var(--ink-strong);}
+
+  .hero{padding:52px 0 26px;max-width:720px;}
+  .eyebrow{display:flex;align-items:center;gap:12px;font-size:11.5px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--stone);font-weight:600;margin:0 0 18px;}
+  .status{border:1px solid var(--hair);border-radius:100px;padding:2px 9px;letter-spacing:.1em;}
+  h1{font-weight:500;font-size:clamp(32px,4.8vw,52px);line-height:1.07;letter-spacing:-.015em;
+    color:var(--ink-strong);margin:0 0 22px;}
+  .lede{font-size:17.5px;max-width:640px;margin:0 0 18px;color:var(--ink);}
+
+  .essay{max-width:760px;padding:20px 0 8px;}
+  .essay h2,.section-head{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--stone);
+    font-weight:600;margin:44px 0 18px;}
+  .essay p{font-size:16.5px;margin:0 0 20px;color:var(--ink);}
+  .essay strong{color:var(--ink-strong);font-weight:600;}
+  a.inline{color:var(--ink-strong);text-decoration:underline;text-decoration-color:var(--stone);
+    text-underline-offset:2px;transition:text-decoration-color .2s var(--ease);}
+  a.inline:hover{text-decoration-color:var(--ink);}
+
+  .ways{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;margin:0 0 20px;}
+  .way{display:flex;flex-direction:column;justify-content:space-between;gap:18px;min-height:230px;
+    padding:22px 20px;border:1px solid var(--hair);border-radius:6px;background:var(--panel);
+    text-decoration:none;transition:border-color .2s var(--ease),background .2s var(--ease);}
+  .way:hover{border-color:var(--stone);background:var(--paper);}
+  .way .q{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--stone);font-weight:600;margin:0 0 10px;}
+  .way h3{font-size:20px;font-weight:500;letter-spacing:-.01em;color:var(--ink-strong);margin:0 0 10px;}
+  .way p{font-size:13.5px;line-height:1.55;margin:0;color:var(--ink);}
+  .more{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--ink-strong);
+    border:1px solid var(--hair);border-radius:100px;padding:6px 13px;align-self:flex-start;
+    transition:all .2s var(--ease);}
+  .way:hover .more{border-color:var(--ink-strong);}
+
+  .deck{margin:56px 0 24px;padding:36px 0 8px;border-top:1px solid var(--hair);max-width:760px;}
+  .deck p{font-size:16px;margin:0 0 18px;}
+  .deck p.section-head{font-size:11px;margin:0 0 18px;}
+  .dl{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;
+    color:var(--ink-strong);border:1px solid var(--ink-strong);border-radius:100px;
+    padding:9px 18px;text-decoration:none;display:inline-block;transition:all .2s var(--ease);margin:0 10px 10px 0;}
+  .dl:hover{background:var(--ink-strong);color:#fff;}
+  .dl.quiet{border-color:var(--hair);color:var(--ink);}
+  .dl.quiet:hover{background:var(--panel);color:var(--ink-strong);border-color:var(--stone);}
+
+  .scope{margin:40px 0 0;padding:20px 22px;background:var(--panel);border-radius:6px;max-width:760px;}
+  .scope p{font-size:14.5px;margin:0 0 10px;}
+  .scope p:last-child{margin:0;}
+
+  .sources{max-width:760px;margin:44px 0 0;}
+  .sources ol{margin:0;padding-left:20px;}
+  .sources li{font-size:13px;color:var(--ink);margin:0 0 8px;}
+
+  .group{margin:0 0 30px;}
+  .group h2{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--stone);font-weight:600;
+    margin:0 0 12px;padding-bottom:8px;border-bottom:1px solid var(--hair);}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;}
+  .chip{font-size:13.5px;color:var(--ink);text-decoration:none;border:1px solid var(--hair);border-radius:100px;
+    padding:6px 14px;background:var(--paper);transition:all .2s var(--ease);}
+  .chip:hover{border-color:var(--stone);background:var(--panel);color:var(--ink-strong);}
+
+  .story-list{display:grid;gap:14px;max-width:820px;}
+  .story{display:block;padding:22px 22px 20px;border:1px solid var(--hair);border-radius:6px;text-decoration:none;
+    transition:border-color .2s var(--ease),background .2s var(--ease);}
+  .story:hover{border-color:var(--stone);background:var(--panel);}
+  .story .nature{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--stone);font-weight:600;margin:0 0 6px;}
+  .story h3{font-size:22px;font-weight:500;color:var(--ink-strong);margin:0 0 10px;letter-spacing:-.01em;}
+  .story .path{font-size:13.5px;color:var(--ink);margin:0;}
+  .story .path em{font-style:italic;}
+
+  footer{border-top:1px solid var(--hair);margin-top:48px;padding:26px 0 44px;
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+  footer .fnav{display:flex;gap:18px;flex-wrap:wrap;}
+  footer a{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--stone);
+    text-decoration:none;font-weight:600;transition:color .2s var(--ease);}
+  footer a:hover{color:var(--ink);}
+  footer .copy{font-size:12px;color:var(--stone);}
+
+  @media(max-width:620px){.hero{padding:34px 0 18px;} .wrap{padding:0 18px;}}
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;}}
+
+  /* ── MEDIA ── */
+  .fig-full{margin:10px 0 44px;}
+  .media{position:relative;}
+  .media video,.fig-full img,.fig-side img,.fig-pair img{display:block;width:100%;height:auto;border-radius:6px;background:var(--panel);}
+  figure{margin:0;} .fig-full figcaption,.fig-pair figcaption{margin-top:12px;}
+  figcaption{font-size:12px;line-height:1.55;color:var(--stone);max-width:760px;}
+  .fig-side{display:grid;grid-template-columns:1fr 240px;gap:26px;align-items:start;margin:44px 0;}
+  .fig-side.left{grid-template-columns:240px 1fr;} .fig-side.left img{order:2;} .fig-side.left figcaption{order:1;}
+  .fig-pair{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin:44px 0;}
+  .fig-stack{display:block;margin:44px 0;max-width:420px;} .fig-stack img{display:block;width:100%;height:auto;border-radius:6px;} .fig-stack figcaption{margin-top:12px;}
+  .vctl{position:absolute;right:12px;bottom:12px;font:600 10px/1 "Asap",sans-serif;letter-spacing:.14em;text-transform:uppercase;
+    color:#fff;background:rgba(30,28,28,.42);border:1px solid rgba(255,255,255,.6);border-radius:100px;padding:7px 12px;cursor:pointer;}
+  .vctl:hover{background:rgba(30,28,28,.62);} .vctl:focus-visible{outline:2px solid #fff;outline-offset:2px;}
+  @media(max-width:720px){.fig-side,.fig-side.left,.fig-pair{grid-template-columns:1fr;} .fig-side.left img{order:0;}}
+</style>
+</head>
+<body>
+  <div class="wrap">
+
+    <nav class="topbar" aria-label="Other Bodies">
+      <a class="mark" href="index.html">Other Bodies</a>
+      <div class="navlinks">
+        <a href="index.html#deck">Deck</a>
+        <a href="constellations.html">Constellations</a>
+        <a href="emotion-compass.html">Emotion Space</a>
+        <a href="topography.html" aria-current="page">Topography</a>
+        <a href="stories.html">Stories</a>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <p class="eyebrow">Other Bodies</p>
+      <h1>Emotional Topography</h1>
+      <p class="lede">A landscape for each feeling in the deck. Drag and scroll to move through it, and watch the shape change as you go. It isn&rsquo;t a map of where a feeling should go. It&rsquo;s an invitation to see what a feeling looks like when it&rsquo;s given form, and to stay inside that shape for a while.</p>
+    </header>
+
+    <figure class="fig-full">
+      <div class="media"><video autoplay muted loop playsinline preload="metadata" poster="media/forest-fog.jpg" aria-describedby="cap-forest-fog"><source src="media/forest-fog.mp4" type="video/mp4" /></video><button class="vctl" type="button">Pause</button></div>
+      <figcaption id="cap-forest-fog">An aerial view drifting slowly over treetops half-hidden in fog, with the sun low and bright behind the mist. Dark crowns of trees rise out of the white haze and sink back into it as the view moves forward. Footage by Joey Bania.</figcaption>
+    </figure>
+
+    <section class="essay" style="padding-top:0;">
+      <h2 style="margin-top:8px;">How the shapes are made</h2>
+      <p>Each landscape is built from nine qualities I observed in one feeling. Six shape the form: intensity, texture, the depth of its past, the uncertainty of its future, permeability, and how much water it holds. Three shape its movement: how fast, how brightly and how steadily it fires. These are observations and interpretations, not measurements.</p>
+    </section>
+
+    <figure class="fig-side">
+      <img src="media/snow-peak.jpg" alt="A snow-covered mountain peak, softly out of focus, rises behind a darker ridge in the foreground. The snow is bright and broken by grey rock, under a pale, cool blue sky with white cloud gathering at the right." loading="lazy" />
+      <figcaption id="cap-snow-peak">A snow-covered mountain peak, softly out of focus, rises behind a darker ridge in the foreground. The snow is bright and broken by grey rock, under a pale, cool blue sky with white cloud gathering at the right. <!-- add photographer credit --></figcaption>
+    </figure>
+
+    <section style="margin-top:28px;">
+      <div class="group">
+        <h2>Protective States</h2>
+        <div class="chips">
+          <a class="chip" href="topography/afraid.html">afraid</a>
+          <a class="chip" href="topography/ashamed.html">ashamed</a>
+          <a class="chip" href="topography/guarded.html">guarded</a>
+          <a class="chip" href="topography/numb.html">numb</a>
+          <a class="chip" href="topography/withdrawn.html">withdrawn</a>
+        </div>
+      </div>
+      <div class="group">
+        <h2>Heavy States</h2>
+        <div class="chips">
+          <a class="chip" href="topography/despair.html">despair</a>
+          <a class="chip" href="topography/exhausted.html">exhausted</a>
+          <a class="chip" href="topography/grief.html">grief</a>
+          <a class="chip" href="topography/heaviness.html">heaviness</a>
+          <a class="chip" href="topography/sad.html">sad</a>
+        </div>
+      </div>
+      <div class="group">
+        <h2>Relational States</h2>
+        <div class="chips">
+          <a class="chip" href="topography/betrayed.html">betrayed</a>
+          <a class="chip" href="topography/jealous.html">jealous</a>
+          <a class="chip" href="topography/lonely.html">lonely</a>
+          <a class="chip" href="topography/longing.html">longing</a>
+          <a class="chip" href="topography/love.html">love</a>
+          <a class="chip" href="topography/tender.html">tender</a>
+        </div>
+      </div>
+      <div class="group">
+        <h2>Activated States</h2>
+        <div class="chips">
+          <a class="chip" href="topography/angry.html">angry</a>
+          <a class="chip" href="topography/anxious.html">anxious</a>
+          <a class="chip" href="topography/frustrated.html">frustrated</a>
+          <a class="chip" href="topography/restless.html">restless</a>
+          <a class="chip" href="topography/urgency.html">urgency</a>
+        </div>
+      </div>
+      <div class="group">
+        <h2>Self-directed States</h2>
+        <div class="chips">
+          <a class="chip" href="topography/doubt.html">self-doubt</a>
+          <a class="chip" href="topography/guilt.html">guilt</a>
+          <a class="chip" href="topography/inadequate.html">inadequate</a>
+          <a class="chip" href="topography/proud.html">proud</a>
+          <a class="chip" href="topography/regret.html">regret</a>
+        </div>
+      </div>
+      <div class="group">
+        <h2>Expansive States</h2>
+        <div class="chips">
+          <a class="chip" href="topography/awe.html">awe</a>
+          <a class="chip" href="topography/curious.html">curious</a>
+          <a class="chip" href="topography/excited.html">excited</a>
+          <a class="chip" href="topography/grateful.html">grateful</a>
+          <a class="chip" href="topography/joy.html">joy</a>
+          <a class="chip" href="topography/wonder.html">wonder</a>
+        </div>
+      </div>
+      <div class="group">
+        <h2>Tender + Quiet States</h2>
+        <div class="chips">
+          <a class="chip" href="topography/belonging.html">belonging</a>
+          <a class="chip" href="topography/content.html">content</a>
+          <a class="chip" href="topography/peaceful.html">peaceful</a>
+          <a class="chip" href="topography/safe.html">safe</a>
+          <a class="chip" href="topography/still.html">still</a>
+        </div>
+      </div>
+      <div class="group">
+        <h2>Complex + Mixed States</h2>
+        <div class="chips">
+          <a class="chip" href="topography/ambivalent.html">ambivalent</a>
+          <a class="chip" href="topography/confused.html">confused</a>
+          <a class="chip" href="topography/disappointed.html">disappointed</a>
+          <a class="chip" href="topography/hopeful.html">hopeful</a>
+          <a class="chip" href="topography/nostalgic.html">nostalgic</a>
+          <a class="chip" href="topography/overwhelmed.html">overwhelmed</a>
+        </div>
+      </div>
+      <div class="group">
+        <h2>Relational Repair States</h2>
+        <div class="chips">
+          <a class="chip" href="topography/forgiving.html">forgiving</a>
+          <a class="chip" href="topography/repaired.html">repaired</a>
+          <a class="chip" href="topography/trusting.html">trusting</a>
+          <a class="chip" href="topography/vulnerable.html">vulnerable</a>
+        </div>
+      </div>
+      <div class="group">
+        <h2>Existential + Threshold States</h2>
+        <div class="chips">
+          <a class="chip" href="topography/alive.html">alive</a>
+          <a class="chip" href="topography/changed.html">changed</a>
+          <a class="chip" href="topography/grief-for-the-world.html">grief for the world</a>
+          <a class="chip" href="topography/the-ache-of-not-yet.html">the ache of not yet</a>
+          <a class="chip" href="topography/uncertain.html">uncertain</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="fig-pair">
+      <div><div class="media"><video autoplay muted loop playsinline preload="metadata" poster="media/rock-flowers.jpg" aria-describedby="cap-rock-flowers"><source src="media/rock-flowers.mp4" type="video/mp4" /></video><button class="vctl" type="button">Pause</button></div><figcaption id="cap-rock-flowers">A dense cushion of tiny pale flowers grows out of a crack between angular grey rocks, against a pale sky. The stone is weathered and creased, and the flowers spill over its edge. Footage by Joey Bania.</figcaption></div>
+      <div><img src="media/cloud-field.jpg" alt="Looking down from high above, a field of white and lavender-grey cloud stretches to a flat horizon. The cloud tops pile in soft, rounded heaps with shadowed hollows between them, beneath a clear, pale blue sky." loading="lazy" /><figcaption id="cap-cloud-field">Looking down from high above, a field of white and lavender-grey cloud stretches to a flat horizon. The cloud tops pile in soft, rounded heaps with shadowed hollows between them, beneath a clear, pale blue sky. <!-- add photographer credit --></figcaption></div>
+    </div>
+
+    <section class="scope">
+      <p>Other Bodies is a creative health practice, not therapy. Nothing here is a treatment, an assessment, or clinical advice. If you are in distress, please reach someone who can help now: in British Columbia, 310-6789 (no area code); anywhere in Canada, call or text 9-8-8.</p>
+    </section>
+
+    <footer>
+      <span class="copy">&copy; 2026 Therapeutic Studio &middot; With gratitude to Shauna Kaendo and the Erotics of Liberation.</span>
+      <div class="fnav">
+        <a href="https://www.instagram.com/therapeuticstudio.ca/" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.youtube.com/@therapeuticstudiodotca" target="_blank" rel="noopener">YouTube</a>
+        <a href="https://www.therapeuticstudio.ca/" target="_blank" rel="noopener">therapeuticstudio.ca</a>
+      </div>
+    </footer>
+
+  </div>
+<script>
+(function(){
+  var rm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll('.media video').forEach(function(v){
+    var b = v.parentNode.querySelector('.vctl');
+    function set(){ var p = v.paused; b.textContent = p ? 'Play' : 'Pause'; b.setAttribute('aria-label', (p ? 'Play' : 'Pause') + ' video'); }
+    if (rm) { v.removeAttribute('autoplay'); v.pause(); }
+    b.addEventListener('click', function(){ if (v.paused) { v.play(); } else { v.pause(); } });
+    v.addEventListener('play', set); v.addEventListener('pause', set); set();
+  });
+})();
+</script>
+</body>
+</html>

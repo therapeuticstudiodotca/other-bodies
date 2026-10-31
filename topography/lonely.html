@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Other Bodies — lonely</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,400;0,500;0,600;1,400&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --paper: #ffffff;
+  --panel: #faf9f8;
+  --ink: #5d5a5b;
+  --ink-strong: #454344;
+  --stone: #a29f9f;
+  --hair: #e6e4e2;
+  --hair-soft: #efedeb;
+  --ease: cubic-bezier(.22,.61,.36,1);
+  --signal-accent: #324835;   /* this feeling's deepest tone */
+  --accent: #74998a;          /* its constellation */
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Asap', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  height: 100vh;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  line-height: 1.6;
+}
+
+header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 10;
+  padding: 26px 28px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 28px;
+  pointer-events: none;
+}
+
+.title-block { display: flex; flex-direction: column; gap: 0.35rem; }
+
+.constellation-label {
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: var(--stone);
+  text-transform: uppercase;
+  opacity: 0;
+  animation: fadeIn 2s ease 0.8s forwards;
+}
+
+.emotion-title {
+  font-size: clamp(26px, 3.8vw, 44px);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--ink-strong);
+  line-height: 1.07;
+  letter-spacing: -0.015em;
+  opacity: 0;
+  animation: slideUp 1.4s ease 0.3s forwards;
+}
+
+.attribution {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--stone);
+  text-align: right;
+  line-height: 1.9;
+  opacity: 0;
+  animation: fadeIn 2s ease 1.4s forwards;
+}
+
+canvas { display: block; width: 100vw; height: 100vh; cursor: grab; }
+canvas:active { cursor: grabbing; }
+
+footer {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  padding: 22px 28px 26px;
+  pointer-events: none;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 2rem;
+}
+
+.card-text {
+  max-width: 42ch;
+  font-size: 17px;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--ink);
+  opacity: 0;
+  animation: fadeIn 3s ease 2.5s forwards;
+}
+
+.card-text em { color: var(--signal-accent); font-style: normal; font-weight: 500; }
+
+.param-block {
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: var(--ink);
+  opacity: 0;
+  animation: fadeIn 3s ease 3s forwards;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.4rem;
+}
+
+.param-row { display: flex; align-items: center; gap: 0.6rem; }
+.param-name {
+  color: var(--stone);
+  min-width: 7.5em;
+  text-align: right;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 9.5px;
+}
+.param-bar { width: 52px; height: 1px; background: var(--hair); position: relative; }
+.param-fill { position: absolute; top: 0; left: 0; height: 100%; background: var(--accent); }
+.param-val { min-width: 2.6em; color: var(--ink); }
+
+.controls {
+  position: fixed;
+  top: 50%; right: 2rem;
+  transform: translateY(-50%);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--stone);
+  opacity: 0;
+  animation: fadeIn 2s ease 4s forwards;
+  writing-mode: vertical-rl;
+  line-height: 2.2;
+  pointer-events: none;
+}
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+@media (max-width: 720px) {
+  header { padding: 18px 18px 12px; }
+  footer { padding: 16px 18px 20px; flex-direction: column; align-items: flex-start; gap: 1.2rem; }
+  .param-block { align-items: flex-start; }
+  .param-name { text-align: left; }
+  .controls { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+  .constellation-label, .emotion-title, .attribution,
+  .card-text, .param-block, .controls { animation: none !important; opacity: 1 !important; }
+}
+</style>
+</head>
+<body>
+<header>
+<div class="title-block">
+<span class="constellation-label">Relational States · Other Bodies</span>
+<h1 class="emotion-title">I feel lonely.</h1>
+</div>
+<a class="attribution" href="../topography.html" style="pointer-events:auto;text-decoration:none;" target="_self">Other Bodies<br>All landscapes</a>
+</header>
+<canvas id="c"></canvas>
+<div class="controls">drag · scroll · breathe</div>
+<footer>
+<p class="card-text">
+Loneliness does not extinguish what is luminous — it is sometimes <em>the only condition dark enough to reveal it</em>.
+</p>
+<div class="param-block" id="params"></div>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+// ═══════════════════════════════════════════════════════════════════════════
+// ██████ EMOTION DEFINITION
+// Change only this block. Everything below is identical for all 52 emotions.
+// ═══════════════════════════════════════════════════════════════════════════
+const EMOTION = {
+totalPoints: 14000,
+// ── Spatial parameters (shape of the cloud) ──────────────────────────────
+intensity: 0.6, // presence, radial reach, density
+texture: 0.5, // surface turbulence, restlessness
+pastDepth: 0.6, // trail along -Z, sedimented history
+futureUncertainty: 0.5, // dissolution along +Z, fraying forward edge
+permeability: 0.4, // interior fill (high) vs. shell (low)
+waterPresence: 0.6, // horizontal strata, pooling
+// ── Temporal parameters (how the signal moves) ───────────────────────────
+signalSpeed: 0.2, // travel speed between nodes
+signalIntensity: 0.6, // peak brightness at activation
+signalVariability: 0.4, // timing irregularity, clustering
+// ── Visibility ───────────────────────────────────────────────────────────
+restingOpacity: 1.0, // base tones are literal on paper
+// ── Colour palette ───────────────────────────────────────────────────────
+palette: {
+deep: new THREE.Color(0xeaecea),
+mid: new THREE.Color(0xd7ddd8),
+high: new THREE.Color(0xc2cec4),
+peak: new THREE.Color(0xaebcb0),
+fringe: new THREE.Color(0xccd4cc),
+signal: new THREE.Color(0x324835),
+}
+};
+// ═══════════════════════════════════════════════════════════════════════════
+// ██████ END EMOTION DEFINITION — do not edit below this line
+// ═══════════════════════════════════════════════════════════════════════════
+
+// ── RENDERER ─────────────────────────────────────────────────────────────
+const canvas = document.getElementById('c');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.toneMapping = THREE.NoToneMapping;
+renderer.setClearColor(0xffffff, 1);
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0xffffff);
+scene.fog = new THREE.FogExp2(0xffffff, 0.012);
+// Soft round sprite, so points read as ink settling on paper.
+const DOT_TEX = (() => {
+const s=64, cv=document.createElement('canvas'); cv.width=cv.height=s;
+const g=cv.getContext('2d');
+const grd=g.createRadialGradient(s/2,s/2,0,s/2,s/2,s/2);
+grd.addColorStop(0,'rgba(255,255,255,1)');
+grd.addColorStop(0.42,'rgba(255,255,255,0.9)');
+grd.addColorStop(1,'rgba(255,255,255,0)');
+g.fillStyle=grd; g.fillRect(0,0,s,s);
+return new THREE.CanvasTexture(cv);
+})();
+const camera = new THREE.PerspectiveCamera(48, window.innerWidth / window.innerHeight, 0.1, 200);
+camera.position.set(0, 0, 18);
+function hash(n) { return ((Math.sin(n * 127.1) * 43758.5453) % 1 + 1) % 1; }
+function noise3(x, y, z) {
+const ix=Math.floor(x),iy=Math.floor(y),iz=Math.floor(z);
+const fx=x-ix,fy=y-iy,fz=z-iz;
+const ux=fx*fx*(3-2*fx),uy=fy*fy*(3-2*fy),uz=fz*fz*(3-2*fz);
+const h=(a,b,c)=>hash(a+b*57+c*113);
+return h(ix,iy,iz)*(1-ux)*(1-uy)*(1-uz) +h(ix+1,iy,iz)*ux*(1-uy)*(1-uz)
++h(ix,iy+1,iz)*(1-ux)*uy*(1-uz) +h(ix+1,iy+1,iz)*ux*uy*(1-uz)
++h(ix,iy,iz+1)*(1-ux)*(1-uy)*uz +h(ix+1,iy,iz+1)*ux*(1-uy)*uz
++h(ix,iy+1,iz+1)*(1-ux)*uy*uz +h(ix+1,iy+1,iz+1)*ux*uy*uz;
+}
+function fbm(x,y,z,oct=5){
+let v=0,a=0.5,f=1,m=0;
+for(let i=0;i<oct;i++){v+=noise3(x*f,y*f,z*f)*a;m+=a;a*=0.5;f*=2.1;}
+return v/m;
+}
+function generateCloud(E) {
+const {intensity,texture,pastDepth,futureUncertainty,permeability,waterPresence}=E;
+const baseRadius=3.5+intensity*3.5;
+const pointCount=Math.floor(E.totalPoints*(0.4+intensity*0.6));
+const positions=new Float32Array(pointCount*3);
+const colors=new Float32Array(pointCount*3);
+const pointData=[];
+const col=new THREE.Color();
+for(let i=0;i<pointCount;i++){
+const shellBias=Math.pow(Math.random(),1/(0.3+permeability*2.5));
+const r=baseRadius*shellBias;
+const theta=Math.random()*Math.PI*2;
+const phi=Math.acos(2*Math.random()-1);
+let x=r*Math.sin(phi)*Math.cos(theta);
+let y=r*Math.sin(phi)*Math.sin(theta);
+let z=r*Math.cos(phi);
+const ns=0.18+texture*0.55,ta=texture*baseRadius*0.55;
+x+=(fbm(x*ns+1.3,y*ns+0.7,z*ns+2.1)-0.5)*ta;
+y+=(fbm(x*ns+5.1,y*ns+3.3,z*ns+0.9)-0.5)*ta;
+z+=(fbm(x*ns+0.4,y*ns+8.2,z*ns+4.7)-0.5)*ta;
+const isPast=Math.random()<pastDepth*0.55;
+if(isPast){
+const pp=Math.pow(Math.random(),1.5)*pastDepth;
+z-=pp*baseRadius*1.8; x*=(1-pp*0.35); y*=(1-pp*0.35);
+}
+const isFuture=z>0&&Math.random()<futureUncertainty*0.45;
+if(isFuture){
+const fr=Math.random()*futureUncertainty;
+z+=fr*baseRadius*0.9;
+x+=(Math.random()-0.5)*fr*baseRadius*0.6;
+y+=(Math.random()-0.5)*fr*baseRadius*0.6;
+}
+const wb=waterPresence*0.6;
+const st=Math.round(y/(baseRadius*0.4))*(baseRadius*0.4);
+y=y*(1-wb)+st*wb*(0.5+Math.random()*0.5);
+const dist=Math.sqrt(x*x+y*y+z*z);
+const normR=Math.min(1,dist/(baseRadius*1.6));
+const normY=(y/baseRadius)*0.5+0.5;
+let t=normR;
+if(isPast) t=Math.max(0,t-0.25);
+if(isFuture) t=Math.min(1,t+0.2);
+const band=Math.sin(normY*Math.PI*3.5)*0.055*waterPresence;
+if(t<0.33) col.lerpColors(E.palette.deep, E.palette.mid, t/0.33);
+else if(t<0.66) col.lerpColors(E.palette.mid, E.palette.high, (t-0.33)/0.33);
+else col.lerpColors(E.palette.high, E.palette.peak, (t-0.66)/0.34);
+col.r=Math.max(0,Math.min(1,col.r+band));
+col.b=Math.max(0,Math.min(1,col.b-band*0.5));
+if(isFuture) col.lerpColors(col,E.palette.fringe,Math.random()*0.5);
+const ro=E.restingOpacity;
+positions[i*3]=x; positions[i*3+1]=y; positions[i*3+2]=z;
+colors[i*3]=col.r*ro; colors[i*3+1]=col.g*ro; colors[i*3+2]=col.b*ro;
+pointData.push({x,y,z,baseR:col.r,baseG:col.g,baseB:col.b,isPast,isFuture,activation:0,neighbors:[]});
+}
+return {positions,colors,pointCount,pointData,baseRadius};
+}
+function buildNeighbourGraph(pointData,baseRadius,permeability){
+const stride=8,signalNodes=[];
+for(let i=0;i<pointData.length;i+=stride) signalNodes.push(i);
+const connR=baseRadius*(0.28+permeability*0.22);
+signalNodes.forEach(i=>{
+const pi=pointData[i];
+signalNodes.forEach(j=>{
+if(i===j) return;
+const pj=pointData[j];
+const dx=pi.x-pj.x,dy=pi.y-pj.y,dz=pi.z-pj.z;
+const d=Math.sqrt(dx*dx+dy*dy+dz*dz);
+if(d<connR) pi.neighbors.push({idx:j,dist:d,weight:1-d/connR});
+});
+pi.neighbors.sort((a,b)=>b.weight-a.weight);
+pi.neighbors=pi.neighbors.slice(0,6);
+});
+return signalNodes;
+}
+class Signal {
+constructor(startIdx,pointData,signalNodes,E){
+this.idx=startIdx; this.pointData=pointData;
+this.signalNodes=signalNodes; this.E=E;
+this.progress=0; this.nextIdx=null; this.alive=true; this.age=0;
+const baseLife=4+(1-E.signalVariability)*8;
+this.maxHops=Math.max(2,Math.round(baseLife+(Math.random()-0.5)*E.signalVariability*6));
+this.hops=0;
+this.brightness=Math.max(0.1,E.signalIntensity+(Math.random()-0.5)*E.signalVariability*0.4);
+this.speed=Math.max(0.05,E.signalSpeed+(Math.random()-0.5)*E.signalVariability*0.5);
+this.trail=[];
+this.trailMaxLength=Math.round(8+(1-E.signalVariability)*10);
+this._chooseNext();
+}
+_chooseNext(){
+const cur=this.pointData[this.idx];
+if(!cur.neighbors||cur.neighbors.length===0){this.alive=false;return;}
+const sel=1-this.E.signalVariability*0.8;
+let chosen;
+if(Math.random()<sel){
+const topN=Math.max(1,Math.floor(cur.neighbors.length*(1-this.E.signalVariability*0.6)));
+chosen=cur.neighbors[Math.floor(Math.random()*topN)];
+} else {
+chosen=cur.neighbors[Math.floor(Math.random()*cur.neighbors.length)];
+}
+this.nextIdx=chosen?chosen.idx:null;
+if(!this.nextIdx) this.alive=false;
+}
+update(dt){
+if(!this.alive) return;
+this.age+=dt;
+this.progress+=dt*this.speed*1.8;
+if(this.progress>=1){
+this.progress=0; this.idx=this.nextIdx; this.hops++;
+if(this.hops>=this.maxHops){this.alive=false;return;}
+this.pointData[this.idx].activation=this.brightness;
+const cur=this.pointData[this.idx];
+const bc=Math.min(cur.neighbors.length,5);
+for(let c=0;c<bc;c++){
+if(cur.neighbors[c]){
+const ni=cur.neighbors[c].idx;
+this.pointData[ni].activation=Math.max(this.pointData[ni].activation,this.brightness*(1-c/bc)*0.72);
+}
+}
+if(Math.random()<this.E.signalVariability*0.55){
+const cs=Math.floor(Math.random()*this.E.signalVariability*4);
+for(let c=0;c<cs;c++){
+if(cur.neighbors[c]){
+const ni=cur.neighbors[c].idx;
+this.pointData[ni].activation=Math.max(this.pointData[ni].activation,this.brightness*(0.2+Math.random()*0.3));
+}
+}
+}
+this.trail.forEach(e=>e.strength*=0.88);
+if(this.nextIdx!==null){
+this.trail.unshift({fromIdx:this.idx,toIdx:this.nextIdx,strength:1.0});
+if(this.trail.length>this.trailMaxLength) this.trail.length=this.trailMaxLength;
+}
+this._chooseNext();
+}
+}
+}
+const cloud=generateCloud(EMOTION);
+const signalNodes=buildNeighbourGraph(cloud.pointData,cloud.baseRadius,EMOTION.permeability);
+const edgeList=[];
+signalNodes.forEach(i=>{
+cloud.pointData[i].neighbors.forEach(nb=>{
+if(nb.idx>i) edgeList.push({a:i,b:nb.idx});
+});
+});
+const MAX_CONN=edgeList.length;
+const connPosArr=new Float32Array(MAX_CONN*2*3);
+const connColArr=new Float32Array(MAX_CONN*2*3);
+const connGeo=new THREE.BufferGeometry();
+connGeo.setAttribute('position',new THREE.BufferAttribute(connPosArr,3));
+connGeo.setAttribute('color', new THREE.BufferAttribute(connColArr,3));
+connGeo.setDrawRange(0,0);
+const connLines=new THREE.LineSegments(connGeo,new THREE.LineBasicMaterial({
+vertexColors:true,transparent:true,opacity:0.55,blending:THREE.NormalBlending,depthWrite:false
+}));
+const geo=new THREE.BufferGeometry();
+geo.setAttribute('position',new THREE.BufferAttribute(cloud.positions,3));
+geo.setAttribute('color', new THREE.BufferAttribute(cloud.colors.slice(),3));
+const pts=new THREE.Points(geo,new THREE.PointsMaterial({
+size:0.16,map:DOT_TEX,vertexColors:true,transparent:true,opacity:0.62,
+sizeAttenuation:true,blending:THREE.NormalBlending,depthWrite:false
+}));
+const MAX_TRAIL=1200;
+const trailPosArr=new Float32Array(MAX_TRAIL*2*3);
+const trailColArr=new Float32Array(MAX_TRAIL*2*3);
+const trailGeo=new THREE.BufferGeometry();
+trailGeo.setAttribute('position',new THREE.BufferAttribute(trailPosArr,3));
+trailGeo.setAttribute('color', new THREE.BufferAttribute(trailColArr,3));
+trailGeo.setDrawRange(0,0);
+const trailLines=new THREE.LineSegments(trailGeo,new THREE.LineBasicMaterial({
+vertexColors:true,transparent:true,opacity:0.7,blending:THREE.NormalBlending,depthWrite:false
+}));
+const group=new THREE.Group();
+group.add(connLines,pts,trailLines);
+scene.add(group);
+const signals=[];
+let signalTimer=0;
+function spawnSignal(){
+if(!signalNodes.length) return;
+signals.push(new Signal(signalNodes[Math.floor(Math.random()*signalNodes.length)],cloud.pointData,signalNodes,EMOTION));
+}
+function nextSpawnInterval(){
+return Math.max(0.05,0.8-EMOTION.signalSpeed*0.55+(Math.random()-0.5)*EMOTION.signalVariability*0.6);
+}
+const maxSignals=Math.round(5+EMOTION.signalSpeed*8+EMOTION.signalVariability*5);
+let nextSpawn=nextSpawnInterval();
+for(let i=0;i<5;i++) spawnSignal();
+[{key:'intensity',label:'intensity'},{key:'texture',label:'texture'},
+{key:'pastDepth',label:'past'},{key:'futureUncertainty',label:'future'},
+{key:'permeability',label:'permeability'},{key:'waterPresence',label:'water'},
+{key:'signalSpeed',label:'speed'},{key:'signalIntensity',label:'signal'},
+{key:'signalVariability',label:'variability'}
+].forEach(({key,label})=>{
+const v=EMOTION[key];
+const row=document.createElement('div');
+row.className='param-row';
+row.innerHTML=`<span class="param-name">${label}</span><span class="param-bar"><span class="param-fill" style="width:${v*100}%"></span></span><span class="param-val">${v.toFixed(2)}</span>`;
+document.getElementById('params').appendChild(row);
+});
+let dragging=false,prev={x:0,y:0};
+let rotY=0,rotX=0.05,tRotY=0,tRotX=0.05,zoom=18,tZoom=18;
+canvas.addEventListener('mousedown',e=>{dragging=true;prev={x:e.clientX,y:e.clientY};});
+canvas.addEventListener('mousemove',e=>{
+if(!dragging)return;
+tRotY+=(e.clientX-prev.x)*0.005;
+tRotX=Math.max(-1,Math.min(1,tRotX+(e.clientY-prev.y)*0.004));
+prev={x:e.clientX,y:e.clientY};
+});
+canvas.addEventListener('mouseup', ()=>dragging=false);
+canvas.addEventListener('mouseleave',()=>dragging=false);
+canvas.addEventListener('wheel',e=>{tZoom=Math.max(6,Math.min(45,tZoom+e.deltaY*0.02));e.preventDefault();},{passive:false});
+let lt=null;
+canvas.addEventListener('touchstart',e=>{if(e.touches.length===1){dragging=true;lt={x:e.touches[0].clientX,y:e.touches[0].clientY};}});
+canvas.addEventListener('touchmove',e=>{
+if(!dragging||e.touches.length!==1)return;
+tRotY+=(e.touches[0].clientX-lt.x)*0.006;
+tRotX=Math.max(-1,Math.min(1,tRotX+(e.touches[0].clientY-lt.y)*0.004));
+lt={x:e.touches[0].clientX,y:e.touches[0].clientY};e.preventDefault();
+},{passive:false});
+canvas.addEventListener('touchend',()=>dragging=false);
+const clock=new THREE.Clock();
+let time=0;
+const origPos=cloud.positions.slice();
+const breathD=0.016+EMOTION.texture*0.010;
+const decayRate=0.55+EMOTION.signalSpeed*0.6;
+const sigCol=EMOTION.palette.signal;
+const ro=EMOTION.restingOpacity;
+function animate(){
+requestAnimationFrame(animate);
+const dt=Math.min(clock.getDelta(),0.05);
+time+=dt;
+if(!dragging) tRotY+=dt*0.04;
+rotY+=(tRotY-rotY)*0.04; rotX+=(tRotX-rotX)*0.04; zoom+=(tZoom-zoom)*0.055;
+group.rotation.y=rotY; group.rotation.x=rotX*0.35;
+const pa=geo.attributes.position.array;
+for(let i=0;i<cloud.pointCount;i++){
+const ox=origPos[i*3],oy=origPos[i*3+1],oz=origPos[i*3+2];
+const b=Math.sin(i*0.38+time*0.28)*breathD;
+pa[i*3]=ox*(1+b); pa[i*3+1]=oy*(1+b*0.9); pa[i*3+2]=oz*(1+b*0.7);
+}
+geo.attributes.position.needsUpdate=true;
+signalTimer+=dt;
+if(signalTimer>=nextSpawn&&signals.length<maxSignals){
+spawnSignal(); signalTimer=0; nextSpawn=nextSpawnInterval();
+}
+for(let i=0;i<cloud.pointCount;i++){
+if(cloud.pointData[i].activation>0)
+cloud.pointData[i].activation=Math.max(0,cloud.pointData[i].activation-dt*decayRate);
+}
+for(let s=signals.length-1;s>=0;s--){
+signals[s].update(dt);
+if(!signals[s].alive) signals.splice(s,1);
+}
+const ca=geo.attributes.color.array;
+for(let i=0;i<cloud.pointCount;i++){
+const pd=cloud.pointData[i],act=pd.activation;
+if(act>0.001){
+const tint=Math.min(1,act*1.9),deepen=Math.max(0,(act-0.4)*0.5);
+ca[i*3] =Math.max(0,pd.baseR*ro+(sigCol.r-pd.baseR*ro)*tint-deepen);
+ca[i*3+1]=Math.max(0,pd.baseG*ro+(sigCol.g-pd.baseG*ro)*tint-deepen);
+ca[i*3+2]=Math.max(0,pd.baseB*ro+(sigCol.b-pd.baseB*ro)*tint-deepen*0.85);
+} else {
+ca[i*3]=pd.baseR*ro; ca[i*3+1]=pd.baseG*ro; ca[i*3+2]=pd.baseB*ro;
+}
+}
+geo.attributes.color.needsUpdate=true;
+const posA=geo.attributes.position.array;
+let connCount=0;
+for(let e=0;e<edgeList.length;e++){
+const {a,b}=edgeList[e];
+const actA=cloud.pointData[a].activation,actB=cloud.pointData[b].activation;
+const joint=Math.sqrt(actA*actB);
+if(joint<0.06) continue;
+const base=connCount*6,ai=a*3,bi=b*3;
+connPosArr[base] =posA[ai]; connPosArr[base+1]=posA[ai+1]; connPosArr[base+2]=posA[ai+2];
+connPosArr[base+3]=posA[bi]; connPosArr[base+4]=posA[bi+1]; connPosArr[base+5]=posA[bi+2];
+const bA=Math.max(0.3,Math.min(1,actA*1.5)),bB=Math.max(0.3,Math.min(1,actB*1.5));
+connColArr[base] =1+(sigCol.r-1)*bA; connColArr[base+1]=1+(sigCol.g-1)*bA; connColArr[base+2]=1+(sigCol.b-1)*bA;
+connColArr[base+3]=1+(sigCol.r-1)*bB; connColArr[base+4]=1+(sigCol.g-1)*bB; connColArr[base+5]=1+(sigCol.b-1)*bB;
+connCount++;
+}
+connGeo.setDrawRange(0,connCount*2);
+connGeo.attributes.position.needsUpdate=true;
+connGeo.attributes.color.needsUpdate=true;
+let edgeCount=0;
+for(const sig of signals){
+if(!sig.trail) continue;
+for(let t=0;t<sig.trail.length;t++){
+if(edgeCount>=MAX_TRAIL) break;
+const edge=sig.trail[t];
+const fi=edge.fromIdx*3,ti=edge.toIdx*3;
+const base=edgeCount*6;
+trailPosArr[base] =posA[fi]; trailPosArr[base+1]=posA[fi+1]; trailPosArr[base+2]=posA[fi+2];
+trailPosArr[base+3]=posA[ti]; trailPosArr[base+4]=posA[ti+1]; trailPosArr[base+5]=posA[ti+2];
+const s2=Math.min(1,edge.strength*sig.brightness*1.6);
+const fadePos=t/Math.max(1,sig.trail.length);
+const wp=(1-fadePos)*(1-fadePos);
+const k=Math.max(0.25,Math.min(1,s2*(0.4+wp*0.6)));
+const r=1+(sigCol.r-1)*k,g=1+(sigCol.g-1)*k,b2=1+(sigCol.b-1)*k;
+trailColArr[base] =r; trailColArr[base+1]=g; trailColArr[base+2]=b2;
+trailColArr[base+3]=1+(r-1)*0.5; trailColArr[base+4]=1+(g-1)*0.5; trailColArr[base+5]=1+(b2-1)*0.5;
+edgeCount++;
+}
+}
+trailGeo.setDrawRange(0,edgeCount*2);
+trailGeo.attributes.position.needsUpdate=true;
+trailGeo.attributes.color.needsUpdate=true;
+camera.position.x=Math.sin(rotY)*zoom;
+camera.position.z=Math.cos(rotY)*zoom;
+camera.position.y=rotX*14;
+camera.lookAt(0,0,0);
+renderer.render(scene,camera);
+}
+animate();
+window.addEventListener('resize',()=>{
+camera.aspect=window.innerWidth/window.innerHeight;
+camera.updateProjectionMatrix();
+renderer.setSize(window.innerWidth,window.innerHeight);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Emotion Stories · Other Bodies</title>
+<meta name="description" content="Five stories, each ten feelings long, each following a process in the natural world." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+<style>
+  :root{--paper:#ffffff;--ink:#5d5a5b;--ink-strong:#454344;--stone:#a29f9f;
+    --hair:#e6e4e2;--hair-soft:#efedeb;--panel:#faf9f8;--maxw:1080px;--ease:cubic-bezier(.22,.61,.36,1);}
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{font-family:"Asap",system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);
+    background:var(--paper);-webkit-font-smoothing:antialiased;line-height:1.6;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+  a{color:inherit;}
+
+  .topbar{display:flex;align-items:baseline;justify-content:space-between;gap:16px 28px;flex-wrap:wrap;
+    padding:26px 0 18px;border-bottom:1px solid var(--hair);}
+  .mark{font-weight:600;font-size:15px;letter-spacing:.02em;color:var(--ink-strong);text-decoration:none;}
+  .navlinks{display:flex;flex-wrap:wrap;gap:20px;}
+  .navlinks a{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--stone);
+    font-weight:600;text-decoration:none;transition:color .2s var(--ease);}
+  .navlinks a:hover{color:var(--ink);}
+  .navlinks a[aria-current="page"]{color:var(--ink-strong);}
+
+  .hero{padding:52px 0 26px;max-width:720px;}
+  .eyebrow{display:flex;align-items:center;gap:12px;font-size:11.5px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--stone);font-weight:600;margin:0 0 18px;}
+  .status{border:1px solid var(--hair);border-radius:100px;padding:2px 9px;letter-spacing:.1em;}
+  h1{font-weight:500;font-size:clamp(32px,4.8vw,52px);line-height:1.07;letter-spacing:-.015em;
+    color:var(--ink-strong);margin:0 0 22px;}
+  .lede{font-size:17.5px;max-width:640px;margin:0 0 18px;color:var(--ink);}
+
+  .essay{max-width:760px;padding:20px 0 8px;}
+  .essay h2,.section-head{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--stone);
+    font-weight:600;margin:44px 0 18px;}
+  .essay p{font-size:16.5px;margin:0 0 20px;color:var(--ink);}
+  .essay strong{color:var(--ink-strong);font-weight:600;}
+  a.inline{color:var(--ink-strong);text-decoration:underline;text-decoration-color:var(--stone);
+    text-underline-offset:2px;transition:text-decoration-color .2s var(--ease);}
+  a.inline:hover{text-decoration-color:var(--ink);}
+
+  .ways{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;margin:0 0 20px;}
+  .way{display:flex;flex-direction:column;justify-content:space-between;gap:18px;min-height:230px;
+    padding:22px 20px;border:1px solid var(--hair);border-radius:6px;background:var(--panel);
+    text-decoration:none;transition:border-color .2s var(--ease),background .2s var(--ease);}
+  .way:hover{border-color:var(--stone);background:var(--paper);}
+  .way .q{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--stone);font-weight:600;margin:0 0 10px;}
+  .way h3{font-size:20px;font-weight:500;letter-spacing:-.01em;color:var(--ink-strong);margin:0 0 10px;}
+  .way p{font-size:13.5px;line-height:1.55;margin:0;color:var(--ink);}
+  .more{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--ink-strong);
+    border:1px solid var(--hair);border-radius:100px;padding:6px 13px;align-self:flex-start;
+    transition:all .2s var(--ease);}
+  .way:hover .more{border-color:var(--ink-strong);}
+
+  .deck{margin:56px 0 24px;padding:36px 0 8px;border-top:1px solid var(--hair);max-width:760px;}
+  .deck p{font-size:16px;margin:0 0 18px;}
+  .deck p.section-head{font-size:11px;margin:0 0 18px;}
+  .dl{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;
+    color:var(--ink-strong);border:1px solid var(--ink-strong);border-radius:100px;
+    padding:9px 18px;text-decoration:none;display:inline-block;transition:all .2s var(--ease);margin:0 10px 10px 0;}
+  .dl:hover{background:var(--ink-strong);color:#fff;}
+  .dl.quiet{border-color:var(--hair);color:var(--ink);}
+  .dl.quiet:hover{background:var(--panel);color:var(--ink-strong);border-color:var(--stone);}
+
+  .scope{margin:40px 0 0;padding:20px 22px;background:var(--panel);border-radius:6px;max-width:760px;}
+  .scope p{font-size:14.5px;margin:0 0 10px;}
+  .scope p:last-child{margin:0;}
+
+  .sources{max-width:760px;margin:44px 0 0;}
+  .sources ol{margin:0;padding-left:20px;}
+  .sources li{font-size:13px;color:var(--ink);margin:0 0 8px;}
+
+  .group{margin:0 0 30px;}
+  .group h2{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--stone);font-weight:600;
+    margin:0 0 12px;padding-bottom:8px;border-bottom:1px solid var(--hair);}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;}
+  .chip{font-size:13.5px;color:var(--ink);text-decoration:none;border:1px solid var(--hair);border-radius:100px;
+    padding:6px 14px;background:var(--paper);transition:all .2s var(--ease);}
+  .chip:hover{border-color:var(--stone);background:var(--panel);color:var(--ink-strong);}
+
+  .story-list{display:grid;gap:14px;max-width:820px;}
+  .story{display:block;padding:22px 22px 20px;border:1px solid var(--hair);border-radius:6px;text-decoration:none;
+    transition:border-color .2s var(--ease),background .2s var(--ease);}
+  .story:hover{border-color:var(--stone);background:var(--panel);}
+  .story .nature{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--stone);font-weight:600;margin:0 0 6px;}
+  .story h3{font-size:22px;font-weight:500;color:var(--ink-strong);margin:0 0 10px;letter-spacing:-.01em;}
+  .story .path{font-size:13.5px;color:var(--ink);margin:0;}
+  .story .path em{font-style:italic;}
+
+  footer{border-top:1px solid var(--hair);margin-top:48px;padding:26px 0 44px;
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+  footer .fnav{display:flex;gap:18px;flex-wrap:wrap;}
+  footer a{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--stone);
+    text-decoration:none;font-weight:600;transition:color .2s var(--ease);}
+  footer a:hover{color:var(--ink);}
+  footer .copy{font-size:12px;color:var(--stone);}
+
+  @media(max-width:620px){.hero{padding:34px 0 18px;} .wrap{padding:0 18px;}}
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;}}
+
+  /* ── MEDIA ── */
+  .fig-full{margin:10px 0 44px;}
+  .media{position:relative;}
+  .media video,.fig-full img,.fig-side img,.fig-pair img{display:block;width:100%;height:auto;border-radius:6px;background:var(--panel);}
+  figure{margin:0;} .fig-full figcaption,.fig-pair figcaption{margin-top:12px;}
+  figcaption{font-size:12px;line-height:1.55;color:var(--stone);max-width:760px;}
+  .fig-side{display:grid;grid-template-columns:1fr 240px;gap:26px;align-items:start;margin:44px 0;}
+  .fig-side.left{grid-template-columns:240px 1fr;} .fig-side.left img{order:2;} .fig-side.left figcaption{order:1;}
+  .fig-pair{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin:44px 0;}
+  .fig-stack{display:block;margin:44px 0;max-width:420px;} .fig-stack img{display:block;width:100%;height:auto;border-radius:6px;} .fig-stack figcaption{margin-top:12px;}
+  .vctl{position:absolute;right:12px;bottom:12px;font:600 10px/1 "Asap",sans-serif;letter-spacing:.14em;text-transform:uppercase;
+    color:#fff;background:rgba(30,28,28,.42);border:1px solid rgba(255,255,255,.6);border-radius:100px;padding:7px 12px;cursor:pointer;}
+  .vctl:hover{background:rgba(30,28,28,.62);} .vctl:focus-visible{outline:2px solid #fff;outline-offset:2px;}
+  @media(max-width:720px){.fig-side,.fig-side.left,.fig-pair{grid-template-columns:1fr;} .fig-side.left img{order:0;}}
+</style>
+</head>
+<body>
+  <div class="wrap">
+
+    <nav class="topbar" aria-label="Other Bodies">
+      <a class="mark" href="index.html">Other Bodies</a>
+      <div class="navlinks">
+        <a href="index.html#deck">Deck</a>
+        <a href="constellations.html">Constellations</a>
+        <a href="emotion-compass.html">Emotion Space</a>
+        <a href="topography.html">Topography</a>
+        <a href="stories.html" aria-current="page">Stories</a>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <p class="eyebrow">Other Bodies</p>
+      <h1>Emotion Stories</h1>
+      <p class="lede">Feelings rarely stay put. Each story follows ten feelings from the deck through a process in the natural world, and lets each one change gradually into the next. Step through at your own pace and stay as long as you like, or let it play: some states pass quickly, and some stay a long time.</p>
+      <p class="lede">They show a feeling as part of a passage, not a place you&rsquo;re stuck. They aren&rsquo;t predictions of where yours will go.</p>
+    </header>
+
+    <figure class="fig-full">
+      <img src="media/floating-pool.jpg" alt="A person floats on their back in a dark, tea-brown pool, arms spread wide and face turned up to the sun. A small waterfall spills white over rocks at the upper left, and overhanging leaves frame the top of the picture." />
+      <figcaption id="cap-floating-pool">A person floats on their back in a dark, tea-brown pool, arms spread wide and face turned up to the sun. A small waterfall spills white over rocks at the upper left, and overhanging leaves frame the top of the picture. <!-- add photographer credit --></figcaption>
+    </figure>
+
+    <section class="story-list">
+        <a class="story" href="stories/germination.html">
+          <p class="nature">a seed committing to one direction in the dark</p>
+          <h3>Germination</h3>
+          <p class="path">still &rarr; numb &rarr; the ache of not yet &rarr; uncertain &rarr; afraid &rarr; overwhelmed &rarr; vulnerable &rarr; curious &rarr; hopeful &rarr; alive</p>
+        </a>
+        <a class="story" href="stories/tidal.html">
+          <p class="nature">the shore, always leaving, always returning</p>
+          <h3>Tidal</h3>
+          <p class="path">love &rarr; longing &rarr; withdrawn &rarr; lonely &rarr; numb &rarr; still &rarr; longing &rarr; tender &rarr; belonging &rarr; love</p>
+        </a>
+        <a class="story" href="stories/erosion.html">
+          <p class="nature">water on stone, over time</p>
+          <h3>Erosion</h3>
+          <p class="path">guarded &rarr; afraid &rarr; lonely &rarr; angry &rarr; exhausted &rarr; grief &rarr; ambivalent &rarr; forgiving &rarr; trusting &rarr; repaired</p>
+        </a>
+        <a class="story" href="stories/succession.html">
+          <p class="nature">a forest moving through its stages</p>
+          <h3>Succession</h3>
+          <p class="path">grief &rarr; exhausted &rarr; hopeful &rarr; proud &rarr; ambivalent &rarr; regret &rarr; forgiving &rarr; belonging &rarr; changed &rarr; still</p>
+        </a>
+        <a class="story" href="stories/dissolved.html">
+          <p class="nature">metamorphosis</p>
+          <h3>Metamorphosis <span style="color:var(--stone);font-size:14px;">(Dissolved)</span></h3>
+          <p class="path">afraid &rarr; guarded &rarr; uncertain &rarr; overwhelmed &rarr; numb &rarr; changed &rarr; the ache of not yet &rarr; curious &rarr; vulnerable &rarr; alive</p>
+        </a>
+    </section>
+
+    <div class="fig-pair">
+      <div><img src="media/river-back.jpg" alt="Seen from above and behind, a person sits in shallow, slow-moving river water in a brown swimsuit, their hair gathered in a bun. Their hands rest in the water at their sides. The river is dark and tea-coloured, its surface rippling with reflected light and a few fallen leaves." loading="lazy" /><figcaption id="cap-river-back">Seen from above and behind, a person sits in shallow, slow-moving river water in a brown swimsuit, their hair gathered in a bun. Their hands rest in the water at their sides. The river is dark and tea-coloured, its surface rippling with reflected light and a few fallen leaves. <!-- add photographer credit --></figcaption></div>
+      <div><img src="media/rust-rock.jpg" alt="A close view of wet coastal rock in rust, ochre and deep brown, crossed by straight diagonal seams. Small barnacles and shells dot the darker surface near the bottom of the frame." loading="lazy" /><figcaption id="cap-rust-rock">A close view of wet coastal rock in rust, ochre and deep brown, crossed by straight diagonal seams. Small barnacles and shells dot the darker surface near the bottom of the frame. <!-- add photographer credit --></figcaption></div>
+    </div>
+
+    <figure class="fig-stack">
+      <img src="media/leaf-water.jpg" alt="A hand holds a single rust-orange leaf at the surface of dark, clear water. Sunlight glints in small points on the ripples, and amber light moves through the water below." loading="lazy" />
+      <figcaption id="cap-leaf-water">A hand holds a single rust-orange leaf at the surface of dark, clear water. Sunlight glints in small points on the ripples, and amber light moves through the water below. <!-- add photographer credit --></figcaption>
+    </figure>
+
+    <section class="scope">
+      <p>Other Bodies is a creative health practice, not therapy. Nothing here is a treatment, an assessment, or clinical advice. If you are in distress, please reach someone who can help now: in British Columbia, 310-6789 (no area code); anywhere in Canada, call or text 9-8-8.</p>
+    </section>
+
+    <footer>
+      <span class="copy">&copy; 2026 Therapeutic Studio &middot; With gratitude to Shauna Kaendo and the Erotics of Liberation.</span>
+      <div class="fnav">
+        <a href="https://www.instagram.com/therapeuticstudio.ca/" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.youtube.com/@therapeuticstudiodotca" target="_blank" rel="noopener">YouTube</a>
+        <a href="https://www.therapeuticstudio.ca/" target="_blank" rel="noopener">therapeuticstudio.ca</a>
+      </div>
+    </footer>
+
+  </div>
+<script>
+(function(){
+  var rm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll('.media video').forEach(function(v){
+    var b = v.parentNode.querySelector('.vctl');
+    function set(){ var p = v.paused; b.textContent = p ? 'Play' : 'Pause'; b.setAttribute('aria-label', (p ? 'Play' : 'Pause') + ' video'); }
+    if (rm) { v.removeAttribute('autoplay'); v.pause(); }
+    b.addEventListener('click', function(){ if (v.paused) { v.play(); } else { v.pause(); } });
+    v.addEventListener('play', set); v.addEventListener('pause', set); set();
+  });
+})();
+</script>
+</body>
+</html>

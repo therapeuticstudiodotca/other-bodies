@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Emotion Space · Other Bodies</title>
+<meta name="description" content="Fifty-two feelings placed along three axes: activation, orientation, and permeability." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --paper:#ffffff;--panel:#faf9f8;--ink:#5d5a5b;--ink-strong:#454344;--stone:#a29f9f;
+    --hair:#e6e4e2;--hair-soft:#efedeb;--maxw:1080px;--ease:cubic-bezier(.22,.61,.36,1);
+  }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{font-family:"Asap",system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);
+    background:var(--paper);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.6;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+
+  .topbar{display:flex;align-items:baseline;justify-content:space-between;gap:16px 28px;flex-wrap:wrap;
+    padding:26px 0 18px;border-bottom:1px solid var(--hair);}
+  .mark{font-weight:600;font-size:15px;letter-spacing:.02em;color:var(--ink-strong);text-decoration:none;}
+  .navlinks{display:flex;flex-wrap:wrap;gap:20px;}
+  .navlinks a{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--stone);
+    font-weight:600;text-decoration:none;transition:color .2s var(--ease);}
+  .navlinks a:hover{color:var(--ink);}
+  .navlinks a[aria-current="page"]{color:var(--ink-strong);}
+
+  .hero{padding:46px 0 22px;max-width:720px;}
+  .eyebrow{font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--stone);
+    font-weight:600;margin:0 0 18px;}
+  h1{font-weight:500;font-size:clamp(30px,4.6vw,52px);line-height:1.07;letter-spacing:-.015em;
+    color:var(--ink-strong);margin:0 0 18px;}
+  .lede{font-size:17px;max-width:620px;margin:0;color:var(--ink);}
+
+  .chart{border:1px solid var(--hair);border-radius:4px;overflow:hidden;background:var(--panel);}
+  canvas{display:block;width:100%;cursor:grab;}
+
+  .detail{display:none;padding:18px 20px;background:var(--paper);border-top:1px solid var(--hair);}
+  .detail.active{display:block;}
+  .detail-head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;}
+  .detail-feeling{font-size:19px;font-weight:500;color:var(--ink-strong);margin:0 0 3px;letter-spacing:-.01em;}
+  .detail-body{font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--stone);margin:0 0 12px;}
+  .detail-dims{display:flex;flex-wrap:wrap;gap:20px;margin:0 0 12px;font-size:12.5px;color:var(--stone);}
+  .detail-dims strong{color:var(--ink-strong);font-weight:600;}
+  .detail-con{font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--stone);
+    margin:0;padding:12px 0 0;border-top:1px solid var(--hair-soft);}
+  .detail-close{background:none;border:none;color:var(--stone);font-size:17px;cursor:pointer;line-height:1;
+    padding:2px 4px;flex-shrink:0;transition:color .2s var(--ease);}
+  .detail-close:hover{color:var(--ink-strong);}
+
+  .legend{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:12px 14px;
+    border-top:1px solid var(--hair);background:var(--paper);}
+  .legend-lab{font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--stone);margin-right:4px;}
+  .leg-item{display:flex;align-items:center;gap:7px;font-size:11.5px;color:var(--ink);cursor:pointer;
+    padding:4px 9px;border:1px solid var(--hair);border-radius:100px;background:var(--paper);
+    font-family:inherit;transition:all .2s var(--ease);}
+  .leg-item:hover{border-color:var(--stone);background:var(--panel);color:var(--ink-strong);}
+  .leg-item[aria-pressed="true"]{border-color:var(--ink-strong);background:var(--panel);color:var(--ink-strong);}
+  .leg-item:focus-visible{outline:2px solid var(--ink);outline-offset:2px;}
+  .leg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+
+  .axes{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--hair);background:var(--paper);}
+  @media (max-width:620px){.axes{grid-template-columns:1fr;}}
+  .axis{padding:12px 14px;border-right:1px solid var(--hair-soft);}
+  .axis:last-child{border-right:none;}
+  .axis h2{font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--stone);
+    margin:0 0 3px;}
+  .axis p{margin:0;font-size:12.5px;color:var(--ink);}
+
+  .hint{padding:9px 14px;border-top:1px solid var(--hair-soft);font-size:11.5px;color:var(--stone);
+    text-align:center;background:var(--paper);}
+
+  footer{border-top:1px solid var(--hair);margin-top:44px;padding:22px 0 46px;font-size:11.5px;
+    color:var(--stone);display:flex;flex-wrap:wrap;gap:6px 28px;justify-content:space-between;}
+  footer p{margin:0;}
+  footer a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--hair);}
+  footer a:hover{border-color:var(--stone);}
+
+  @media (max-width:620px){.hero{padding:32px 0 18px;}}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;}}
+
+  /* ── MEDIA ── */
+  .fig-full{margin:10px 0 44px;}
+  .media{position:relative;}
+  .media video,.fig-full img,.fig-side img,.fig-pair img{display:block;width:100%;height:auto;border-radius:6px;background:var(--panel);}
+  figure{margin:0;} .fig-full figcaption,.fig-pair figcaption{margin-top:12px;}
+  figcaption{font-size:12px;line-height:1.55;color:var(--stone);max-width:760px;}
+  .fig-side{display:grid;grid-template-columns:1fr 240px;gap:26px;align-items:start;margin:44px 0;}
+  .fig-side.left{grid-template-columns:240px 1fr;} .fig-side.left img{order:2;} .fig-side.left figcaption{order:1;}
+  .fig-pair{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin:44px 0;}
+  .fig-stack{display:block;margin:44px 0;max-width:420px;} .fig-stack img{display:block;width:100%;height:auto;border-radius:6px;} .fig-stack figcaption{margin-top:12px;}
+  .vctl{position:absolute;right:12px;bottom:12px;font:600 10px/1 "Asap",sans-serif;letter-spacing:.14em;text-transform:uppercase;
+    color:#fff;background:rgba(30,28,28,.42);border:1px solid rgba(255,255,255,.6);border-radius:100px;padding:7px 12px;cursor:pointer;}
+  .vctl:hover{background:rgba(30,28,28,.62);} .vctl:focus-visible{outline:2px solid #fff;outline-offset:2px;}
+  @media(max-width:720px){.fig-side,.fig-side.left,.fig-pair{grid-template-columns:1fr;} .fig-side.left img{order:0;}}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <nav class="topbar" aria-label="Other Bodies">
+      <a class="mark" href="index.html">Other Bodies</a>
+      <div class="navlinks">
+        <a href="index.html#deck">Deck</a>
+        <a href="constellations.html">Constellations</a>
+        <a href="emotion-compass.html" aria-current="page">Emotion Space</a>
+        <a href="topography.html">Topography</a>
+        <a href="stories.html">Stories</a>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <p class="eyebrow">Other Bodies</p>
+      <h1>The Emotion Space</h1>
+      <p class="lede">The same fifty-two feelings, placed along three axes rather than sorted into groups: how activated a state is, whether it turns inward or outward, and how open it is to what surrounds it. A feeling was never only one thing.</p>
+    </header>
+
+    <figure class="fig-full">
+      <div class="media"><video autoplay muted loop playsinline preload="metadata" poster="media/shoreline.jpg" aria-describedby="cap-shoreline"><source src="media/shoreline.mp4" type="video/mp4" /></video><button class="vctl" type="button">Pause</button></div>
+      <figcaption id="cap-shoreline">Waves roll gently onto a wide, flat beach under a pale blue sky, with small white clouds along the horizon. Sunlight lies in a soft column on the water as the surf comes in and draws back. Footage by Joey Bania.</figcaption>
+    </figure>
+
+    <div class="chart">
+      <canvas id="c3d" aria-label="Fifty-two feelings plotted across activation, orientation and permeability"></canvas>
+
+      <div class="detail" id="detail">
+        <div class="detail-head">
+          <div>
+            <p class="detail-feeling" id="d-feeling"></p>
+            <p class="detail-body" id="d-body"></p>
+          </div>
+          <button class="detail-close" id="d-close" aria-label="Close">&#x2715;</button>
+        </div>
+        <div class="detail-dims" id="d-dims"></div>
+        <p class="detail-con" id="d-con"></p>
+      </div>
+
+      <div class="legend">
+        <span class="legend-lab">Constellation</span>
+        <div id="legend3d" style="display:flex;flex-wrap:wrap;gap:6px;"></div>
+      </div>
+
+      <div class="axes">
+        <div class="axis"><h2>X &mdash; Activation</h2><p>Still &rarr; Activated</p></div>
+        <div class="axis"><h2>Y &mdash; Orientation</h2><p>Inward &rarr; Outward</p></div>
+        <div class="axis"><h2>Z &mdash; Permeability</h2><p>Contracted &rarr; Permeable</p></div>
+      </div>
+
+      <p class="hint">Drag to rotate, scroll to zoom, and select any point to read where it sits.</p>
+    </div>
+
+    <div class="fig-pair">
+      <div><img src="media/wind-face.jpg" alt="A person stands in a desert at golden hour, eyes closed, face lifted slightly toward the light. Their long dark hair lifts in the wind across a deep blue sky streaked with thin cloud. Warm light catches their cheek, chin and collarbone; low hills and spindly shrubs sit dark along the horizon." loading="lazy" /><figcaption id="cap-wind-face">A person stands in a desert at golden hour, eyes closed, face lifted slightly toward the light. Their long dark hair lifts in the wind across a deep blue sky streaked with thin cloud. Warm light catches their cheek, chin and collarbone; low hills and spindly shrubs sit dark along the horizon. <!-- add photographer credit --></figcaption></div>
+      <div><img src="media/moon-shoulder.jpg" alt="Seen from behind and below, a person&#x27;s head and bare shoulder are dark against a clear evening sky of deep blue. Strands of their hair blow sideways in the wind. Up and to the right, a small pale moon hangs in the blue." loading="lazy" /><figcaption id="cap-moon-shoulder">Seen from behind and below, a person&#x27;s head and bare shoulder are dark against a clear evening sky of deep blue. Strands of their hair blow sideways in the wind. Up and to the right, a small pale moon hangs in the blue. <!-- add photographer credit --></figcaption></div>
+    </div>
+
+    <figure class="fig-side left">
+      <img src="media/blue-sea.jpg" alt="Dusk over a rocky shoreline. Waves roll in white across dark water toward black rocks in the foreground, the whole scene washed in deep blue and violet. Low cloud fills the sky, and a small island sits dark on the horizon at the right." loading="lazy" />
+      <figcaption id="cap-blue-sea">Dusk over a rocky shoreline. Waves roll in white across dark water toward black rocks in the foreground, the whole scene washed in deep blue and violet. Low cloud fills the sky, and a small island sits dark on the horizon at the right. <!-- add photographer credit --></figcaption>
+    </figure>
+
+    <footer>
+      <p>With gratitude to Shauna Kaendo and the Erotics of Liberation.</p>
+      <p>Other Bodies is a creative health practice, not therapy. Nothing here is a treatment, an assessment, or clinical advice. If you are in distress, please reach someone who can help now: in British Columbia, 310-6789 (no area code); anywhere in Canada, call or text 9-8-8.</p>
+      <p>&copy; 2026 Therapeutic Studio &middot; <a href="https://www.therapeuticstudio.ca" target="_blank" rel="noopener">therapeuticstudio.ca</a></p>
+    </footer>
+  </div>
+
+<script>
+const emotions = [
+  {name:"I feel ashamed.",    body:"The Octopus",           con:"Protective States",       color:"#7d8ca3", act:0.2,  ori:0.15, per:0.15},
+  {name:"I feel afraid.",     body:"The Cave",              con:"Protective States",       color:"#7d8ca3", act:0.15, ori:0.2,  per:0.12},
+  {name:"I feel numb.",       body:"Permafrost",            con:"Protective States",       color:"#7d8ca3", act:0.05, ori:0.15, per:0.08},
+  {name:"I feel withdrawn.",  body:"The Tide Pool",         con:"Protective States",       color:"#7d8ca3", act:0.1,  ori:0.1,  per:0.12},
+  {name:"I feel guarded.",    body:"The Pine Cone",         con:"Protective States",       color:"#7d8ca3", act:0.12, ori:0.12, per:0.1 },
+  {name:"I feel grief.",      body:"Moss",                  con:"Heavy States",            color:"#6f9298", act:0.2,  ori:0.35, per:0.3 },
+  {name:"I feel sad.",        body:"Rain on Still Water",   con:"Heavy States",            color:"#6f9298", act:0.18, ori:0.25, per:0.28},
+  {name:"I feel exhausted.",  body:"The River Delta",       con:"Heavy States",            color:"#6f9298", act:0.1,  ori:0.3,  per:0.22},
+  {name:"I feel despair.",    body:"The Dormant Volcano",   con:"Heavy States",            color:"#6f9298", act:0.08, ori:0.2,  per:0.15},
+  {name:"I feel heaviness.",  body:"Clay Soil After Rain",  con:"Heavy States",            color:"#6f9298", act:0.08, ori:0.22, per:0.18},
+  {name:"I feel lonely.",     body:"Bioluminescent Ocean",  con:"Relational States",       color:"#74998a", act:0.2,  ori:0.45, per:0.25},
+  {name:"I feel tender.",     body:"Mycelium",              con:"Relational States",       color:"#74998a", act:0.22, ori:0.6,  per:0.55},
+  {name:"I feel longing.",    body:"Migratory Bird",        con:"Relational States",       color:"#74998a", act:0.35, ori:0.55, per:0.38},
+  {name:"I feel love.",       body:"River to the Sea",      con:"Relational States",       color:"#74998a", act:0.4,  ori:0.7,  per:0.65},
+  {name:"I feel jealous.",    body:"Plant at the Window",   con:"Relational States",       color:"#74998a", act:0.38, ori:0.5,  per:0.3 },
+  {name:"I feel betrayed.",   body:"Soil After Wildfire",   con:"Relational States",       color:"#74998a", act:0.3,  ori:0.4,  per:0.2 },
+  {name:"I feel angry.",      body:"River in Flood",        con:"Activated States",        color:"#8a9b72", act:0.9,  ori:0.45, per:0.35},
+  {name:"I feel anxious.",    body:"A Murmuration",         con:"Activated States",        color:"#8a9b72", act:0.8,  ori:0.35, per:0.3 },
+  {name:"I feel urgent.",     body:"Salmon Upstream",       con:"Activated States",        color:"#8a9b72", act:0.88, ori:0.5,  per:0.42},
+  {name:"I feel frustrated.", body:"Water at a Blocked Path",con:"Activated States",      color:"#8a9b72", act:0.65, ori:0.35, per:0.25},
+  {name:"I feel restless.",   body:"The Tides",             con:"Activated States",        color:"#8a9b72", act:0.7,  ori:0.4,  per:0.35},
+  {name:"I feel doubt.",      body:"Young Tree in Wind",    con:"Self-Directed States",    color:"#b19a6d", act:0.4,  ori:0.2,  per:0.25},
+  {name:"I feel inadequate.", body:"Lichen on Bare Rock",   con:"Self-Directed States",    color:"#b19a6d", act:0.22, ori:0.18, per:0.2 },
+  {name:"I feel proud.",      body:"Tree in Full Canopy",   con:"Self-Directed States",    color:"#b19a6d", act:0.45, ori:0.5,  per:0.55},
+  {name:"I feel regret.",     body:"River's Old Course",    con:"Self-Directed States",    color:"#b19a6d", act:0.28, ori:0.22, per:0.28},
+  {name:"I feel guilty.",     body:"Meadow After Storm",    con:"Self-Directed States",    color:"#b19a6d", act:0.42, ori:0.3,  per:0.3 },
+  {name:"I feel joy.",        body:"Wildflowers After Rain",con:"Expansive States",        color:"#b98e70", act:0.72, ori:0.75, per:0.82},
+  {name:"I feel wonder.",     body:"Whale Song",            con:"Expansive States",        color:"#b98e70", act:0.5,  ori:0.85, per:0.88},
+  {name:"I feel grateful.",   body:"Autumn Tree",           con:"Expansive States",        color:"#b98e70", act:0.38, ori:0.8,  per:0.75},
+  {name:"I feel awe.",        body:"Edge of the Canyon",    con:"Expansive States",        color:"#b98e70", act:0.45, ori:0.9,  per:0.92},
+  {name:"I feel curious.",    body:"Root Through Rock",     con:"Expansive States",        color:"#b98e70", act:0.6,  ori:0.7,  per:0.7 },
+  {name:"I feel excited.",    body:"The Waggle Dance Bee",  con:"Expansive States",        color:"#b98e70", act:0.85, ori:0.72, per:0.65},
+  {name:"I feel still.",      body:"Deep Lake in Winter",   con:"Tender + Quiet States",   color:"#ab8078", act:0.05, ori:0.3,  per:0.45},
+  {name:"I feel peaceful.",   body:"Meadow After Rain",     con:"Tender + Quiet States",   color:"#ab8078", act:0.08, ori:0.45, per:0.6 },
+  {name:"I feel content.",    body:"Bear in Late Autumn",   con:"Tender + Quiet States",   color:"#ab8078", act:0.12, ori:0.5,  per:0.62},
+  {name:"I feel safe.",       body:"Old Growth Forest",     con:"Tender + Quiet States",   color:"#ab8078", act:0.1,  ori:0.55, per:0.68},
+  {name:"I feel belonging.",  body:"River in Its Watershed",con:"Tender + Quiet States",   color:"#ab8078", act:0.15, ori:0.65, per:0.72},
+  {name:"I feel ambivalent.", body:"The Estuary",           con:"Complex + Mixed States",  color:"#b28b9b", act:0.45, ori:0.45, per:0.42},
+  {name:"I feel overwhelmed.",body:"Forest Floor in Snow",  con:"Complex + Mixed States",  color:"#b28b9b", act:0.62, ori:0.3,  per:0.22},
+  {name:"I feel confused.",   body:"Fog in the Valley",     con:"Complex + Mixed States",  color:"#b28b9b", act:0.3,  ori:0.35, per:0.35},
+  {name:"I feel hopeful.",    body:"Green Shoot",           con:"Complex + Mixed States",  color:"#b28b9b", act:0.48, ori:0.65, per:0.62},
+  {name:"I feel disappointed.",body:"Field After Harvest",  con:"Complex + Mixed States",  color:"#b28b9b", act:0.22, ori:0.4,  per:0.32},
+  {name:"I feel nostalgic.",  body:"The Hollow Ancient Tree",con:"Complex + Mixed States", color:"#b28b9b", act:0.18, ori:0.5,  per:0.45},
+  {name:"I feel forgiving.",  body:"River Smoothing Stone", con:"Relational Repair States",color:"#a58cab", act:0.3,  ori:0.65, per:0.62},
+  {name:"I feel vulnerable.", body:"Hermit Crab",           con:"Relational Repair States",color:"#a58cab", act:0.42, ori:0.55, per:0.55},
+  {name:"I feel trusting.",   body:"Seed to the Wind",      con:"Relational Repair States",color:"#a58cab", act:0.35, ori:0.7,  per:0.7 },
+  {name:"I feel repaired.",   body:"The Eagle's Nest",      con:"Relational Repair States",color:"#a58cab", act:0.28, ori:0.6,  per:0.6 },
+  {name:"I feel uncertain.",  body:"Shoreline at Dusk",     con:"Existential + Threshold", color:"#8a80a0", act:0.32, ori:0.5,  per:0.55},
+  {name:"I feel changed.",    body:"Forest in Succession",  con:"Existential + Threshold", color:"#8a80a0", act:0.38, ori:0.6,  per:0.6 },
+  {name:"I feel grief for the world.",body:"Glacier in Retreat",con:"Existential + Threshold",color:"#8a80a0", act:0.25, ori:0.85, per:0.65},
+  {name:"I feel the ache of not yet.",body:"Bud in Late Winter",con:"Existential + Threshold",color:"#8a80a0", act:0.28, ori:0.55, per:0.48},
+  {name:"I feel alive.",      body:"The Germinating Seed",  con:"Existential + Threshold", color:"#8a80a0", act:0.75, ori:0.75, per:0.88}
+];
+
+const INK = '#5d5a5b', INK_STRONG = '#454344', PAPER = '#faf9f8';
+const canvas = document.getElementById('c3d');
+const ctx = canvas.getContext('2d');
+const W = 700, H = 500;
+
+let rotX = 0.35, rotY = -0.5, zoom = 1;
+let dragging = false, lastMouse = null;
+let hovered = null, filterCon = null, autoRot = true;
+
+function sizeCanvas(){
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  canvas.width = W * dpr; canvas.height = H * dpr;
+  canvas.style.aspectRatio = W + ' / ' + H;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+
+function project(ax, ay, az){
+  const cosX=Math.cos(rotX),sinX=Math.sin(rotX),cosY=Math.cos(rotY),sinY=Math.sin(rotY);
+  const y1=ay*cosX-az*sinX, z1=ay*sinX+az*cosX;
+  const x2=ax*cosY+z1*sinY, z2=-ax*sinY+z1*cosY;
+  const fov=2.8*zoom, sc=fov/(fov+z2);
+  return {sx:x2*sc*W*0.38+W/2, sy:y1*sc*H*0.38+H/2, scale:sc, z:z2};
+}
+
+function emotionCoords(e){
+  return {ax:(e.act-0.5)*2, ay:-(e.per-0.5)*2, az:(e.ori-0.5)*2};
+}
+
+function hexToRgb(hex){
+  return {r:parseInt(hex.slice(1,3),16),g:parseInt(hex.slice(3,5),16),b:parseInt(hex.slice(5,7),16)};
+}
+
+function starPath(cx, cy, outerR, innerR, points){
+  const step = Math.PI / points;
+  ctx.beginPath();
+  for (let i = 0; i < points*2; i++) {
+    const angle = i*step - Math.PI/2;
+    const r = (i%2===0) ? outerR : innerR;
+    const x = cx+Math.cos(angle)*r, y = cy+Math.sin(angle)*r;
+    i===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+  }
+  ctx.closePath();
+}
+
+function drawMark(cx, cy, outerR, innerR, color, alpha, isHov){
+  const c = hexToRgb(color);
+  starPath(cx, cy, outerR + (isHov ? 7 : 3), innerR + (isHov ? 3 : 1), 4);
+  ctx.fillStyle = `rgba(${c.r},${c.g},${c.b},${(isHov ? 0.20 : 0.13)*alpha})`;
+  ctx.fill();
+
+  starPath(cx, cy, outerR, innerR, 4);
+  ctx.fillStyle = `rgba(${c.r},${c.g},${c.b},${alpha})`;
+  ctx.fill();
+
+  if (isHov) {
+    starPath(cx, cy, outerR + 3.5, innerR + 1.5, 4);
+    ctx.strokeStyle = INK_STRONG; ctx.lineWidth = 0.9; ctx.stroke();
+  }
+}
+
+function getProjected(){
+  return emotions.map(e => {
+    const {ax,ay,az} = emotionCoords(e);
+    return {...e, ...project(ax,ay,az), ax, ay, az};
+  }).sort((a,b) => a.z - b.z);
+}
+
+function drawAxes(){
+  const axes = [
+    {from:[-1,0,0], to:[1,0,0],  lo:'Still',     hi:'Activated'},
+    {from:[0,1,0],  to:[0,-1,0], lo:'Permeable', hi:'Contracted'},
+    {from:[0,0,-1], to:[0,0,1],  lo:'Inward',    hi:'Outward'}
+  ];
+  axes.forEach(ax => {
+    const p0 = project(...ax.from), p1 = project(...ax.to);
+    ctx.strokeStyle = 'rgba(162,159,159,0.55)'; ctx.lineWidth = 0.7;
+    ctx.setLineDash([3,5]);
+    ctx.beginPath(); ctx.moveTo(p0.sx,p0.sy); ctx.lineTo(p1.sx,p1.sy); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.font = '600 9px Asap, sans-serif';
+    ctx.fillStyle = 'rgba(162,159,159,1)';
+    ctx.textAlign = 'center';
+    ctx.letterSpacing = '1.2px';
+    ctx.fillText(ax.lo.toUpperCase(), p0.sx, p0.sy - 9);
+    ctx.fillText(ax.hi.toUpperCase(), p1.sx, p1.sy + 15);
+    ctx.letterSpacing = '0px';
+  });
+}
+
+let animFrame;
+function draw(){
+  sizeCanvas();
+  ctx.fillStyle = PAPER; ctx.fillRect(0,0,W,H);
+  drawAxes();
+  getProjected().forEach(e => {
+    const faded = filterCon && e.con !== filterCon;
+    const isHov = hovered === e;
+    const outerR = 5.5 * e.scale * 1.9;
+    const innerR = outerR * 0.42;
+    const alpha = faded ? 0.16 : 1;
+    drawMark(e.sx, e.sy, outerR, innerR, e.color, alpha, isHov && !faded);
+    if (!faded) {
+      const label = e.name.replace('I feel ','').replace('.','');
+      const cap = label.charAt(0).toUpperCase() + label.slice(1);
+      const fs = Math.max(9, 10*e.scale);
+      ctx.font = `${isHov ? '600 ' : ''}${fs}px Asap, sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.fillStyle = isHov ? INK_STRONG : INK;
+      ctx.fillText(cap, e.sx, e.sy + outerR + 13);
+    }
+  });
+}
+
+function scheduleRender(){ cancelAnimationFrame(animFrame); animFrame = requestAnimationFrame(draw); }
+
+function getHovered(mx,my){
+  const proj = getProjected();
+  for (let i = proj.length-1; i >= 0; i--) {
+    const e = proj[i];
+    if (filterCon && e.con !== filterCon) continue;
+    const outerR = 5.5 * e.scale * 1.9;
+    const dx = mx-e.sx, dy = my-e.sy;
+    if (Math.sqrt(dx*dx+dy*dy) < outerR + 8) return e;
+  }
+  return null;
+}
+
+function coords(evt){
+  const rect = canvas.getBoundingClientRect();
+  return {x:(evt.clientX-rect.left)*(W/rect.width), y:(evt.clientY-rect.top)*(H/rect.height)};
+}
+
+const detail = document.getElementById('detail');
+function openDetail(h){
+  document.getElementById('d-feeling').textContent = h.name;
+  document.getElementById('d-body').textContent = h.body;
+  const pct = v => Math.round(v*100) + '%';
+  document.getElementById('d-dims').innerHTML =
+    `<span>Activation <strong>${pct(h.act)}</strong></span>` +
+    `<span>Orientation <strong>${pct(h.ori)}</strong></span>` +
+    `<span>Permeability <strong>${pct(h.per)}</strong></span>`;
+  document.getElementById('d-con').textContent = h.con;
+  detail.classList.add('active');
+}
+document.getElementById('d-close').addEventListener('click', () => detail.classList.remove('active'));
+
+canvas.addEventListener('mousedown', e => {
+  dragging = true; lastMouse = coords(e); autoRot = false; canvas.style.cursor = 'grabbing';
+});
+canvas.addEventListener('mouseup', () => { dragging=false; canvas.style.cursor='grab'; });
+canvas.addEventListener('mouseleave', () => { dragging=false; hovered=null; scheduleRender(); });
+canvas.addEventListener('mousemove', e => {
+  const {x,y} = coords(e);
+  if (dragging && lastMouse) {
+    rotY += (x-lastMouse.x)*0.008; rotX += (y-lastMouse.y)*0.008;
+    lastMouse = {x,y}; scheduleRender(); return;
+  }
+  const h = getHovered(x,y);
+  if (h !== hovered) { hovered = h; scheduleRender(); }
+  canvas.style.cursor = h ? 'pointer' : 'grab';
+});
+canvas.addEventListener('click', e => {
+  const {x,y} = coords(e);
+  const h = getHovered(x,y);
+  if (h) openDetail(h);
+});
+canvas.addEventListener('wheel', e => {
+  e.preventDefault();
+  zoom = Math.max(0.5, Math.min(3, zoom*(e.deltaY < 0 ? 1.1 : 0.91)));
+  scheduleRender();
+}, {passive:false});
+
+let touchLast = null;
+canvas.addEventListener('touchstart', e => {
+  if (e.touches.length !== 1) return;
+  autoRot = false;
+  const rect = canvas.getBoundingClientRect(), t = e.touches[0];
+  touchLast = {x:(t.clientX-rect.left)*(W/rect.width), y:(t.clientY-rect.top)*(H/rect.height)};
+}, {passive:true});
+canvas.addEventListener('touchmove', e => {
+  if (e.touches.length !== 1 || !touchLast) return;
+  const rect = canvas.getBoundingClientRect(), t = e.touches[0];
+  const p = {x:(t.clientX-rect.left)*(W/rect.width), y:(t.clientY-rect.top)*(H/rect.height)};
+  rotY += (p.x-touchLast.x)*0.008; rotX += (p.y-touchLast.y)*0.008;
+  touchLast = p; scheduleRender(); e.preventDefault();
+}, {passive:false});
+canvas.addEventListener('touchend', e => {
+  if (touchLast && e.changedTouches.length === 1) {
+    const h = getHovered(touchLast.x, touchLast.y);
+    if (h) openDetail(h);
+  }
+  touchLast = null;
+}, {passive:true});
+
+const legend = document.getElementById('legend3d');
+[...new Set(emotions.map(e => e.con))].forEach(con => {
+  const col = emotions.find(e => e.con === con).color;
+  const btn = document.createElement('button');
+  btn.className = 'leg-item'; btn.type = 'button';
+  btn.setAttribute('aria-pressed', 'false');
+  btn.innerHTML = `<span class="leg-dot" style="background:${col}"></span>${con}`;
+  btn.addEventListener('click', () => {
+    filterCon = filterCon === con ? null : con;
+    [...legend.querySelectorAll('button')].forEach(b => b.setAttribute('aria-pressed','false'));
+    if (filterCon) btn.setAttribute('aria-pressed','true');
+    scheduleRender();
+  });
+  legend.appendChild(btn);
+});
+
+function autoRotate(){ if (autoRot) { rotY += 0.003; scheduleRender(); } requestAnimationFrame(autoRotate); }
+autoRotate();
+scheduleRender();
+window.addEventListener('resize', scheduleRender);
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(scheduleRender);
+</script>
+<script>
+(function(){
+  var rm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll('.media video').forEach(function(v){
+    var b = v.parentNode.querySelector('.vctl');
+    function set(){ var p = v.paused; b.textContent = p ? 'Play' : 'Pause'; b.setAttribute('aria-label', (p ? 'Play' : 'Pause') + ' video'); }
+    if (rm) { v.removeAttribute('autoplay'); v.pause(); }
+    b.addEventListener('click', function(){ if (v.paused) { v.play(); } else { v.pause(); } });
+    v.addEventListener('play', set); v.addEventListener('pause', set); set();
+  });
+})();
+</script>
+</body>
+</html>

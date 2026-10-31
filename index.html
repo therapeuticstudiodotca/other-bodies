@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Other Bodies · Therapeutic Studio</title>
+<meta name="description" content="Fifty-two feelings, each paired with a natural body, and five ways in: a deck, a star chart, an emotion space, a topography and emotion stories." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+<style>
+  :root{--paper:#ffffff;--ink:#5d5a5b;--ink-strong:#454344;--stone:#a29f9f;
+    --hair:#e6e4e2;--hair-soft:#efedeb;--panel:#faf9f8;--maxw:1080px;--ease:cubic-bezier(.22,.61,.36,1);}
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{font-family:"Asap",system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);
+    background:var(--paper);-webkit-font-smoothing:antialiased;line-height:1.6;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+  a{color:inherit;}
+
+  .topbar{display:flex;align-items:baseline;justify-content:space-between;gap:16px 28px;flex-wrap:wrap;
+    padding:26px 0 18px;border-bottom:1px solid var(--hair);}
+  .mark{font-weight:600;font-size:15px;letter-spacing:.02em;color:var(--ink-strong);text-decoration:none;}
+  .navlinks{display:flex;flex-wrap:wrap;gap:20px;}
+  .navlinks a{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--stone);
+    font-weight:600;text-decoration:none;transition:color .2s var(--ease);}
+  .navlinks a:hover{color:var(--ink);}
+  .navlinks a[aria-current="page"]{color:var(--ink-strong);}
+
+  .hero{padding:52px 0 26px;max-width:720px;}
+  .eyebrow{display:flex;align-items:center;gap:12px;font-size:11.5px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--stone);font-weight:600;margin:0 0 18px;}
+  .status{border:1px solid var(--hair);border-radius:100px;padding:2px 9px;letter-spacing:.1em;}
+  h1{font-weight:500;font-size:clamp(32px,4.8vw,52px);line-height:1.07;letter-spacing:-.015em;
+    color:var(--ink-strong);margin:0 0 22px;}
+  .lede{font-size:17.5px;max-width:640px;margin:0 0 18px;color:var(--ink);}
+
+  .essay{max-width:760px;padding:20px 0 8px;}
+  .essay h2,.section-head{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--stone);
+    font-weight:600;margin:44px 0 18px;}
+  .essay p{font-size:16.5px;margin:0 0 20px;color:var(--ink);}
+  .essay strong{color:var(--ink-strong);font-weight:600;}
+  a.inline{color:var(--ink-strong);text-decoration:underline;text-decoration-color:var(--stone);
+    text-underline-offset:2px;transition:text-decoration-color .2s var(--ease);}
+  a.inline:hover{text-decoration-color:var(--ink);}
+
+  .ways{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;margin:0 0 20px;}
+  .way{display:flex;flex-direction:column;justify-content:space-between;gap:18px;min-height:230px;
+    padding:22px 20px;border:1px solid var(--hair);border-radius:6px;background:var(--panel);
+    text-decoration:none;transition:border-color .2s var(--ease),background .2s var(--ease);}
+  .way:hover{border-color:var(--stone);background:var(--paper);}
+  .way .q{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--stone);font-weight:600;margin:0 0 10px;}
+  .way h3{font-size:20px;font-weight:500;letter-spacing:-.01em;color:var(--ink-strong);margin:0 0 10px;}
+  .way p{font-size:13.5px;line-height:1.55;margin:0;color:var(--ink);}
+  .more{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--ink-strong);
+    border:1px solid var(--hair);border-radius:100px;padding:6px 13px;align-self:flex-start;
+    transition:all .2s var(--ease);}
+  .way:hover .more{border-color:var(--ink-strong);}
+
+  .deck{margin:56px 0 24px;padding:36px 0 8px;border-top:1px solid var(--hair);max-width:760px;}
+  .deck p{font-size:16px;margin:0 0 18px;}
+  .deck p.section-head{font-size:11px;margin:0 0 18px;}
+  .dl{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;
+    color:var(--ink-strong);border:1px solid var(--ink-strong);border-radius:100px;
+    padding:9px 18px;text-decoration:none;display:inline-block;transition:all .2s var(--ease);margin:0 10px 10px 0;}
+  .dl:hover{background:var(--ink-strong);color:#fff;}
+  .dl.quiet{border-color:var(--hair);color:var(--ink);}
+  .dl.quiet:hover{background:var(--panel);color:var(--ink-strong);border-color:var(--stone);}
+
+  .scope{margin:40px 0 0;padding:20px 22px;background:var(--panel);border-radius:6px;max-width:760px;}
+  .scope p{font-size:14.5px;margin:0 0 10px;}
+  .scope p:last-child{margin:0;}
+
+  .sources{max-width:760px;margin:44px 0 0;}
+  .sources ol{margin:0;padding-left:20px;}
+  .sources li{font-size:13px;color:var(--ink);margin:0 0 8px;}
+
+  .group{margin:0 0 30px;}
+  .group h2{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--stone);font-weight:600;
+    margin:0 0 12px;padding-bottom:8px;border-bottom:1px solid var(--hair);}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;}
+  .chip{font-size:13.5px;color:var(--ink);text-decoration:none;border:1px solid var(--hair);border-radius:100px;
+    padding:6px 14px;background:var(--paper);transition:all .2s var(--ease);}
+  .chip:hover{border-color:var(--stone);background:var(--panel);color:var(--ink-strong);}
+
+  .story-list{display:grid;gap:14px;max-width:820px;}
+  .story{display:block;padding:22px 22px 20px;border:1px solid var(--hair);border-radius:6px;text-decoration:none;
+    transition:border-color .2s var(--ease),background .2s var(--ease);}
+  .story:hover{border-color:var(--stone);background:var(--panel);}
+  .story .nature{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--stone);font-weight:600;margin:0 0 6px;}
+  .story h3{font-size:22px;font-weight:500;color:var(--ink-strong);margin:0 0 10px;letter-spacing:-.01em;}
+  .story .path{font-size:13.5px;color:var(--ink);margin:0;}
+  .story .path em{font-style:italic;}
+
+  footer{border-top:1px solid var(--hair);margin-top:48px;padding:26px 0 44px;
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+  footer .fnav{display:flex;gap:18px;flex-wrap:wrap;}
+  footer a{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--stone);
+    text-decoration:none;font-weight:600;transition:color .2s var(--ease);}
+  footer a:hover{color:var(--ink);}
+  footer .copy{font-size:12px;color:var(--stone);}
+
+  @media(max-width:620px){.hero{padding:34px 0 18px;} .wrap{padding:0 18px;}}
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;}}
+
+  /* ── MEDIA ── */
+  .fig-full{margin:10px 0 44px;}
+  .media{position:relative;}
+  .media video,.fig-full img,.fig-side img,.fig-pair img{display:block;width:100%;height:auto;border-radius:6px;background:var(--panel);}
+  figure{margin:0;} .fig-full figcaption,.fig-pair figcaption{margin-top:12px;}
+  figcaption{font-size:12px;line-height:1.55;color:var(--stone);max-width:760px;}
+  .fig-side{display:grid;grid-template-columns:1fr 240px;gap:26px;align-items:start;margin:44px 0;}
+  .fig-side.left{grid-template-columns:240px 1fr;} .fig-side.left img{order:2;} .fig-side.left figcaption{order:1;}
+  .fig-pair{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin:44px 0;}
+  .fig-stack{display:block;margin:44px 0;max-width:420px;} .fig-stack img{display:block;width:100%;height:auto;border-radius:6px;} .fig-stack figcaption{margin-top:12px;}
+  .vctl{position:absolute;right:12px;bottom:12px;font:600 10px/1 "Asap",sans-serif;letter-spacing:.14em;text-transform:uppercase;
+    color:#fff;background:rgba(30,28,28,.42);border:1px solid rgba(255,255,255,.6);border-radius:100px;padding:7px 12px;cursor:pointer;}
+  .vctl:hover{background:rgba(30,28,28,.62);} .vctl:focus-visible{outline:2px solid #fff;outline-offset:2px;}
+  @media(max-width:720px){.fig-side,.fig-side.left,.fig-pair{grid-template-columns:1fr;} .fig-side.left img{order:0;}}
+</style>
+</head>
+<body>
+  <div class="wrap">
+
+    <nav class="topbar" aria-label="Other Bodies">
+      <a class="mark" href="index.html">Other Bodies</a>
+      <div class="navlinks">
+        <a href="index.html#deck">Deck</a>
+        <a href="constellations.html">Constellations</a>
+        <a href="emotion-compass.html">Emotion Space</a>
+        <a href="topography.html">Topography</a>
+        <a href="stories.html">Stories</a>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <p class="eyebrow"><span>Therapeutic Studio</span><span class="status">Creative health</span></p>
+      <h1>Other Bodies</h1>
+      <p class="lede">Most days someone asks how I am, and the words I have are too small. Fine. Tired. Not great. Each is true, and none of them is the shape of what I&rsquo;m carrying.</p>
+      <p class="lede">Other Bodies began as a deck of 52 feelings, each paired with a natural body. The tools here grew out of it, one question at a time. A name wasn&rsquo;t enough, so I wanted to see which feelings travel together. Then where a feeling sits. Then what shape it has. Then how it turns into the next one. They are for the moment before I pick up a brush, when something is there and I can&rsquo;t yet say what it is or where.</p>
+    </header>
+
+    <figure class="fig-full">
+      <div class="media"><video autoplay muted loop playsinline preload="metadata" poster="media/autumn-leaves.jpg" aria-describedby="cap-autumn-leaves"><source src="media/autumn-leaves.mp4" type="video/mp4" /></video><button class="vctl" type="button">Pause</button></div>
+      <figcaption id="cap-autumn-leaves">Thin branches hung with yellow autumn leaves cross the frame in soft, low light. Some leaves are bright and sharp; others blur into a muted green background. The branches sway a little in a breeze. Footage by Joey Bania.</figcaption>
+    </figure>
+
+    <section>
+      <p class="section-head">Five ways in</p>
+      <p class="essay" style="padding:0;margin:0 0 20px;font-size:16px;">Each holds the same 52 feelings and asks a different question of them.</p>
+      <div class="ways">
+        <a class="way" href="#deck">
+          <div><p class="q">What is this feeling, and what keeps it company?</p><h3>The deck</h3>
+          <p>Fifty-two creative care prompts in ten feeling constellations, each pairing a feeling with a natural body.</p></div>
+          <span class="more">Open</span>
+        </a>
+        <a class="way" href="constellations.html">
+          <div><p class="q">Which feelings travel together?</p><h3>Feeling Constellations</h3>
+          <p>The deck as a night sky. Each star is a card; each constellation gathers feelings that move through the body in a similar way.</p></div>
+          <span class="more">Open</span>
+        </a>
+        <a class="way" href="emotion-compass.html">
+          <div><p class="q">Where does this feeling sit?</p><h3>The Emotion Space</h3>
+          <p>The same feelings in a space you can turn: still to activated, inward to outward, contracted to permeable.</p></div>
+          <span class="more">Open</span>
+        </a>
+        <a class="way" href="topography.html">
+          <div><p class="q">What shape is it?</p><h3>Emotional Topography</h3>
+          <p>A landscape for each feeling, built from nine qualities I observed in it. Move through one and stay inside the shape.</p></div>
+          <span class="more">Open</span>
+        </a>
+        <a class="way" href="stories.html">
+          <div><p class="q">How does one feeling become another?</p><h3>Emotion Stories</h3>
+          <p>Five stories, ten feelings each, following erosion, germination, metamorphosis, succession and the tide.</p></div>
+          <span class="more">Open</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="essay">
+      <h2>Why they are built this way</h2>
+      <p><strong>Names in pencil.</strong> The neuroscientist Lisa Feldman Barrett&rsquo;s research suggests the brain builds a feeling in the moment, out of bodily sensation and the concepts it has to hand, rather than finding one already there. So the names on these cards are offers, not labels. Borrow one, or put it back.</p>
+      <p><strong>More than one direction.</strong> Psychology has long described feeling along a few dimensions rather than as separate boxes, and how activated you are is one of the most common. The Emotion Space keeps activation. Orientation and permeability are mine: they came from paying attention in the studio, not from a study.</p>
+      <p><strong>Observed, not measured.</strong> Where each feeling sits in the Emotion Space, and the nine qualities behind each landscape, are my own observations and interpretations. Yours may differ, and that isn&rsquo;t a mistake. The tools show one person&rsquo;s reading so you have something to read against.</p>
+      <p><strong>Feelings move.</strong> Many of us live with states that come and go on schedules we don&rsquo;t set. The stories are there so a feeling can be seen as part of a passage, not a place you&rsquo;re stuck.</p>
+      <p><strong>Company, not answers.</strong> A natural body doesn&rsquo;t explain a feeling. It gives you something to sit beside that has lived with something like it for far longer than we have, and asks nothing of you.</p>
+
+      <figure class="fig-side">
+      <img src="media/gold-clouds.jpg" alt="A wide sky of heavy cloud at sunset. Dark slate-grey masses drift across the top of the frame, while the lower clouds are lit gold and cream along their edges. Thin, pale streaks of high cloud cross a faded blue." loading="lazy" />
+      <figcaption id="cap-gold-clouds">A wide sky of heavy cloud at sunset. Dark slate-grey masses drift across the top of the frame, while the lower clouds are lit gold and cream along their edges. Thin, pale streaks of high cloud cross a faded blue. <!-- add photographer credit --></figcaption>
+    </figure>
+
+    <h2>How I use them</h2>
+      <p>Before I make anything, I spend a minute with one of the tools. Not to diagnose the day, only to find it. Then I pick up the brush and let the watercolour do what it does.</p>
+      <p>On <a class="inline" href="https://www.youtube.com/@therapeuticstudiodotca" target="_blank" rel="noopener">YouTube</a> I share short practice sessions: watercolour blobs made alongside the deck. And every second Saturday, from 14 November 2026 to 30 October 2027, I write about one feeling and its companion on <a class="inline" href="https://www.therapeuticstudio.ca/make-space" target="_blank" rel="noopener">Make Space</a>, the Therapeutic Studio blog.</p>
+    </section>
+
+    <section class="deck" id="deck">
+      <p class="section-head" style="margin-top:0;">The deck</p>
+      <p>Fifty-two prompts, for feelings that need a companion rather than an answer. Draw a card at random, or choose the constellation closest to how you feel. Keep one beside you for a day, draw one for a session, or draw one for someone you care about. Each asks you to make something honest rather than polished. Watercolour suits it, because it won&rsquo;t be fully controlled, but use whatever you have.</p>
+      <p>The deck is free for personal use. For professional or organisational use, please get in touch first.</p>
+      <a class="dl" href="https://drive.google.com/file/d/1_TKFgn0XcZxGExKQWgr4kGEh4hkEC1GA/view?usp=sharing" target="_blank" rel="noopener">Download the deck</a>
+      <a class="dl quiet" href="https://www.therapeuticstudio.ca/14271922" target="_blank" rel="noopener">Get in touch</a>
+    </section>
+
+    <figure class="fig-side left">
+      <img src="media/wildflowers-sun.jpg" alt="Low sun lights a field of small yellow wildflowers from behind. A person in a long, loose dark dress stands among them, one hand at their waist and the other reaching out to touch the flower heads. The sun sits on the horizon, a bright gold point between the stems." loading="lazy" />
+      <figcaption id="cap-wildflowers-sun">Low sun lights a field of small yellow wildflowers from behind. A person in a long, loose dark dress stands among them, one hand at their waist and the other reaching out to touch the flower heads. The sun sits on the horizon, a bright gold point between the stems. <!-- add photographer credit --></figcaption>
+    </figure>
+
+    <section class="scope">
+      <p><strong style="color:var(--ink-strong);font-weight:600;">What these tools are not.</strong> They are not tests. They haven&rsquo;t been validated, they don&rsquo;t measure anything about you, and they can&rsquo;t tell anyone what you feel. They are ways into making.</p>
+      <p>Other Bodies is a creative health practice, not therapy. Nothing here is a treatment, an assessment, or clinical advice. If you are in distress, please reach someone who can help now: in British Columbia, 310-6789 (no area code); anywhere in Canada, call or text 9-8-8.</p>
+    </section>
+
+    <section class="sources">
+      <p class="section-head">Sources</p>
+      <ol>
+        <li>Barrett, L. F. (2017). The theory of constructed emotion: An active inference account of interoception and categorization. <em>Social Cognitive and Affective Neuroscience</em>, 12(1), 1&ndash;23.</li>
+        <li>Barrett, L. F. (2017). <em>How emotions are made: The secret life of the brain.</em> Houghton Mifflin Harcourt.</li>
+        <li>Russell, J. A. (1980). A circumplex model of affect. <em>Journal of Personality and Social Psychology</em>, 39(6), 1161&ndash;1178.</li>
+      </ol>
+    </section>
+
+    <footer>
+      <span class="copy">&copy; 2026 Therapeutic Studio &middot; With gratitude to Shauna Kaendo and the Erotics of Liberation.</span>
+      <div class="fnav">
+        <a href="https://www.instagram.com/therapeuticstudio.ca/" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.youtube.com/@therapeuticstudiodotca" target="_blank" rel="noopener">YouTube</a>
+        <a href="https://www.therapeuticstudio.ca/" target="_blank" rel="noopener">therapeuticstudio.ca</a>
+      </div>
+    </footer>
+
+  </div>
+<script>
+(function(){
+  var rm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll('.media video').forEach(function(v){
+    var b = v.parentNode.querySelector('.vctl');
+    function set(){ var p = v.paused; b.textContent = p ? 'Play' : 'Pause'; b.setAttribute('aria-label', (p ? 'Play' : 'Pause') + ' video'); }
+    if (rm) { v.removeAttribute('autoplay'); v.pause(); }
+    b.addEventListener('click', function(){ if (v.paused) { v.play(); } else { v.pause(); } });
+    v.addEventListener('play', set); v.addEventListener('pause', set); set();
+  });
+})();
+</script>
+</body>
+</html>
